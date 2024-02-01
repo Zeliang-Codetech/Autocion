@@ -1,0 +1,26 @@
+.topbar_container {
+    background-color: black;
+    padding: 0.5rem 2rem;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+
+    .topbar_logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .topbar_links_container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .topbar_links {
+        color: white;
+        text-decoration: none;
+    }
+
+}

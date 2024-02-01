@@ -1,0 +1,16 @@
+.layout_admin {
+    display: flex;
+    gap: 10px;
+
+    .layout_pages {
+        width: 100%;
+        padding: 1rem;
+
+    }
+
+    .admin_pages {
+        padding: 1rem;
+        border: 1px solid rgb(230, 230, 230);
+        border-radius: 5px;
+    }
+}

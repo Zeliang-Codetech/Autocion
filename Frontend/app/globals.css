@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Chakra Petch", sans-serif;
+}
+:root {
+  --primary_color: #01b7de;
+}
+
+button {
+  background-color: var(--primary_color);
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+}
+input,
+textarea,
+select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid rgb(230, 230, 230);
+}
+
+textarea {
+  resize: none;
+}
+
+a {
+  text-decoration: none;
+}

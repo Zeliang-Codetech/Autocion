@@ -1,0 +1,25 @@
+.footer_container {
+    padding: 2rem;
+    color: white;
+    background-color: black;
+
+    .footer_logo {
+        text-align: center;
+    }
+
+    .footer_links {
+        color: white;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .footer_apps {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    p {
+        text-align: center;
+    }
+}

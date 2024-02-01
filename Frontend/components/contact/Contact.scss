@@ -1,0 +1,36 @@
+.contact_container {
+    text-align: center;
+    padding: 2rem;
+
+
+}
+
+.contact_content {
+    display: flex;
+    padding: 2rem;
+
+    .form {
+        width: 50%;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+
+    .image {
+        text-align: center;
+
+        p {
+            margin: auto;
+            width: 80%;
+        }
+
+        .contact_details {
+            display: flex;
+        }
+    }
+
+
+}

@@ -1,0 +1,18 @@
+.services_container {
+    text-align: center;
+
+    h1 {
+        padding: 2rem;
+    }
+
+    .services_content {
+        width: 80%;
+        margin: auto;
+        display: grid;
+        column-gap: 40px;
+        row-gap: 40px;
+        padding: 2rem;
+        grid-template-columns: auto auto auto auto;
+
+    }
+}
