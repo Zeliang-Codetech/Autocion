@@ -10,12 +10,16 @@
 
 button {
   background-color: var(--primary_color);
+  border:0.5px solid var(--primary_color);
   color: white;
   padding: 0.5rem 2rem;
   border-radius: 8px;
-  border: 0;
   cursor: pointer;
 }
+button:hover{
+  background-color: white;
+  color: var(--primary_color);
+  }
 input,
 textarea,
 select {
@@ -31,3 +35,25 @@ textarea {
 a {
   text-decoration: none;
 }
+
+.delete_btn {
+  cursor: pointer;
+  background-color: red;
+  border: 0.5px solid red;
+}
+.delete_btn:hover {
+  color: red;
+  background-color: white;
+
+}
+
+.hidden{
+  display: none;
+}
+
+.toast{
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+}
+

@@ -3,10 +3,6 @@ import { useEffect } from "react";
 import "../providers.scss";
 import axios from "axios";
 const page = () => {
-  useEffect(async () => {
-    const res = await axios.get("http://localhost:8000/api/v1/create/service");
-    console.log(res);
-  }, []);
   return (
     <div className="providers_container">
       <div className="providers_heading">

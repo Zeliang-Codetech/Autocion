@@ -31,8 +31,6 @@ export const createService = async (req, res, next) => {
     }
 }
 
-
-
 export const getAllService = async (req, res, next) => {
     try {
         const getService = await Service.find({ ...req.body })

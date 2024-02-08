@@ -9,6 +9,7 @@ const Topbar_admin = () => {
         width={100}
         height={60}
         alt="logo"
+        priority={true}
       />
     </nav>
   );

@@ -26,11 +26,11 @@ export default function ProvidersLayout({ children }) {
   return (
     <div>
       <nav className="providers_nav">
-        {providerNav.map((link) => {
+        {providerNav.map((link, index) => {
           const isActive = pathname === link.href;
           return (
             <Link
-              key={link.title}
+              key={index}
               href={link.href}
               className={`provider_link ${isActive && "active"}`}
             >

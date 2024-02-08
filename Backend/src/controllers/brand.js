@@ -57,7 +57,7 @@ export const getBrandsById = async (req, res) => {
 
         if (brandData) {
             const { brandVehicles } = req; // Fetched vehicles are available in req.brandVehicles
-            res.status(201).json({ status: 1, success: true, message: "Brand found", brandData, brandVehicles })
+            res.status(201).json({ status: 1, success: true, message: "Brand found", response:brandData, brandVehicles })
 
         } else {
             return next(new ErrorHandler("Brand not found.", 400))

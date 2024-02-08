@@ -5,7 +5,12 @@ const brandSchema = new mongoose.Schema({
     image:{type:String},
     mobile:{type:String},
     email:{type:String},
-    status:{type:String, enum:["Approved","Pending"],default:"Pending"}
+    status: {
+        type: String,
+        enum: ["Approved", "Pending", "Rejected"],
+        default: "Pending",
+      },
+      
 
 });
 
