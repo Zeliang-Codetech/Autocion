@@ -48,7 +48,7 @@ const about = () => {
         {aboutData.map((data) => {
           return (
             <div key={data.id}>
-              <Image src={data.image} width={80} height={80} alt="image" />
+              <Image src={data.image} width={100} height={100} alt="image" />
               <h5>{data.title}</h5>
               <p>{data.content}</p>
             </div>

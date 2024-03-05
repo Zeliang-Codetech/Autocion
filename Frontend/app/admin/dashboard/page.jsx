@@ -1,6 +1,7 @@
 import Image from "next/image";
 import "./dashboard.scss";
 import Link from "next/link";
+import PrivateRoute from "../../../Routes/AdminRoute";
 import {
   MdHandyman,
   MdShoppingCart,
@@ -58,77 +59,89 @@ const page = () => {
   ];
 
   return (
-    <section className="dashboard_container">
-      <div className="dashboard_row_1">
-        <div className="dashboard_col_1">
-          <div
-            style={{ backgroundColor: "#01b7de", color: "white" }}
-            className="dashboard_small_card"
-          >
-            <p>{greetings()}</p>
-            <h3>Hello, Admin</h3>
-            <p style={{ fontSize: "13px" }}>
-              View Your Current Sales & Summary.
-            </p>
-          </div>
-          {smallCard.map((cards) => {
-            return (
-              <>
-                <div key={cards.title} className="dashboard_small_card">
-                  <div className="dashboard_small_card_content">
-                    <span
-                      className="dashboard_icons"
-                      style={{ backgroundColor: cards.bg, color: cards.color }}
-                    >
-                      {cards.image}
-                    </span>
-                    <div>
-                      <h2>{cards.numbers}</h2>
-                      <h4>{cards.title}</h4>
-                    </div>
-                  </div>
-
-                  <Link
-                    className="dashboard_link"
-                    style={{ backgroundColor: cards.bg, color: cards.color }}
-                    href={cards.title}
-                  >
-                    {cards.title}
-                    <MdArrowForwardIos />
-                  </Link>
-                </div>
-              </>
-            );
-          })}
-        </div>
-        <div className="dashboard_col_2">Graph</div>
-      </div>
-      <div className="dashboard_row_1">
-        <div className="dashboard_col_3 ">
-          <div className="top_providers_heading">
-            <h1>Top providers</h1>
-            <select name="orders" id="order">
-              <option value="Orders">Orders</option>
-              <option value="Ratings">Ratings</option>
-            </select>
-          </div>
-          <div className="dashboard_row_1">
-            {topProviders.map((data) => {
+    <PrivateRoute>
+      <div className="dashboard_container">
+        <div className="dashboard_row_1">
+          <div className="dashboard_col_1">
+            <div
+              style={{ backgroundColor: "#01b7de", color: "white" }}
+              className="dashboard_small_card"
+            >
+              <p>{greetings()}</p>
+              <h3>Hello, Admin</h3>
+              <p style={{ fontSize: "13px" }}>
+                View Your Current Sales & Summary.
+              </p>
+            </div>
+            {smallCard.map((cards) => {
               return (
-                <div key={data.title} className="top_providers_card">
-                  <Image
-                    className="top_providers_image"
-                    src={data.image}
-                    alt={data.title}
-                    width={60}
-                    height={60}
-                  />
-                  <h3>{data.title}</h3>
-                </div>
+                <>
+                  <div key={cards.title} className="dashboard_small_card">
+                    <div className="dashboard_small_card_content">
+                      <span
+                        className="dashboard_icons"
+                        style={{
+                          backgroundColor: cards.bg,
+                          color: cards.color,
+                        }}
+                      >
+                        {cards.image}
+                      </span>
+                      <div>
+                        <h2>{cards.numbers}</h2>
+                        <h4>{cards.title}</h4>
+                      </div>
+                    </div>
+
+                    <Link
+                      className="dashboard_link"
+                      style={{ backgroundColor: cards.bg, color: cards.color }}
+                      href={cards.title}
+                    >
+                      {cards.title}
+                      <MdArrowForwardIos />
+                    </Link>
+                  </div>
+                </>
               );
             })}
           </div>
-          <div className="dashboard_row_2">
+          <div className="dashboard_col_2">Graph</div>
+        </div>
+        <div className="dashboard_row_1">
+          <div className="dashboard_col_3 ">
+            <div className="top_providers_heading">
+              <h1>Top providers</h1>
+              <select name="orders" id="order">
+                <option value="Orders">Orders</option>
+                <option value="Ratings">Ratings</option>
+              </select>
+            </div>
+            <div className="dashboard_row_1">
+              {topProviders.map((data, index) => {
+                return (
+                  <div key={index} className="top_providers_card">
+                    <Image
+                      className="top_providers_image"
+                      src={data.image}
+                      alt={data.title}
+                      width={60}
+                      height={60}
+                    />
+                    <h3>{data.title}</h3>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="dashboard_row_2">
+              <div>
+                <h1>Top providers</h1>
+              </div>
+              <div>asd</div>
+              <div>asd</div>
+            </div>
+          </div>
+          <div className="dashboard_col_4">
             <div>
               <h1>Top providers</h1>
             </div>
@@ -136,15 +149,8 @@ const page = () => {
             <div>asd</div>
           </div>
         </div>
-        <div className="dashboard_col_4">
-          <div>
-            <h1>Top providers</h1>
-          </div>
-          <div>asd</div>
-          <div>asd</div>
-        </div>
       </div>
-    </section>
+    </PrivateRoute>
   );
 };
 

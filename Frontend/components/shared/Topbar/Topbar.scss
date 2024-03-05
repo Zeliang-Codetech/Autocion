@@ -1,26 +1,68 @@
 .topbar_container {
-    background-color: black;
-    padding: 0.5rem 2rem;
+  background-color: var(--secondary_color);
+  padding: 1rem 5rem;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+
+  .topbar_logo {
     display: flex;
     align-items: center;
-    position: sticky;
-    top: 0;
+  }
 
-    .topbar_logo {
-        display: flex;
-        align-items: center;
+  .topbar_links_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .topbar_links {
+    color: white;
+    text-decoration: none;
+  }
+}
+.dp_container {
+  cursor: pointer;
+  width: fit-content;
+
+  .dp {
+    width: auto;
+    height: auto;
+    border: 0.5px solid var(--primary_color);
+    border-radius: 100%;
+  }
+}
+.profile-dropdown {
+  .dropdown_links_container {
+    background: #000000;
+    position: absolute;
+    right: 30px;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+
+    .dropdown_links,
+    h4 {
+      border-radius: 5px;
+      display: flex;
+      gap: 10px;
+      background-color: black;
+      color: rgb(221, 221, 221);
+      align-items: center;
+      padding: 0.5rem 1rem;
     }
+    .dropdown_links:hover {
+      color: rgb(0, 0, 0);
+      border-radius: 3px;
 
-    .topbar_links_container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
+      background-color: rgb(221, 221, 221);
     }
-
-    .topbar_links {
-        color: white;
-        text-decoration: none;
-    }
-
+  }
+}
+.login_btn {
+  width: 10rem;
 }

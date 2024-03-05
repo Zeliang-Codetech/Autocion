@@ -1,8 +1,9 @@
 import Image from "next/image";
 import "./Contact.scss";
+
 const Contact = () => {
   return (
-    <section className="contact_container" id="contact">
+    <div className="contact_container" id="contact">
       <h1>CONTACT</h1>
       <div className="contact_content">
         <div className="form">
@@ -31,7 +32,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

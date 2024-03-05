@@ -7,21 +7,26 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "../../../components/modal/Modal";
 import { Toaster, toast } from "sonner";
 import camera from "../../../public/assets/camera.svg";
+import PrivateRoute from "../../../Routes/AdminRoute";
 
 const page = () => {
-  const [brandsData, setBrandsData] = useState([]);
   const [popUpAdd, setPopUpAdd] = useState(false);
   const [popUpDetails, setPopUpDetails] = useState(false);
   const [popUpDelete, setPopUpDelete] = useState(false);
   const [popUpEdit, setPopUpEdit] = useState(false);
+
   const [data, setData] = useState({
+    //for submitting
     name: "",
     image: "",
     mobile: "",
     email: "",
   });
-  const [id, setId] = useState("");
+
   const [singleData, setSingleData] = useState({});
+  const [brandData, setBrandsData] = useState([]);
+
+  const [id, setId] = useState("");
   const [preview, setPreview] = useState(null);
 
   const fileInputRef = useRef();
@@ -29,12 +34,12 @@ const page = () => {
   const toggleAdd = () => {
     setData({
       name: "",
-      image: "", // Assuming you have a default value or null for image
+      image: "",
       mobile: "",
       email: "",
     });
-    setPreview(null); // Set preview to default image or clear it
-    setPopUpAdd(!popUpAdd); // Update modal state
+    setPreview(null);
+    setPopUpAdd(!popUpAdd);
   };
   const toggleEdit = async (id) => {
     setPopUpEdit(!popUpEdit);
@@ -51,7 +56,9 @@ const page = () => {
   };
 
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    const fieldName = e.target.name;
+    const newValue = e.target.value;
+    setData({ ...data, [fieldName]: newValue });
   };
 
   const handleEditChange = (e) => {
@@ -60,12 +67,15 @@ const page = () => {
   const handleFileChange = (e) => {
     const [file] = e.target.files;
     setData({ ...data, image: file });
+    console.log(e.target.files);
+
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
   };
   const handleFileEditChange = (e) => {
     const [file] = e.target.files;
     setSingleData((prev) => ({ ...prev, image: file }));
+
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
   };
@@ -83,7 +93,8 @@ const page = () => {
 
   const fetchBrandDetails = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/get/brand");
+      const res = await axios.get(`http://localhost:8000/api/v1/get/brand`);
+
       setBrandsData(res.data.brandsData);
     } catch (error) {
       console.log(error);
@@ -130,7 +141,6 @@ const page = () => {
           toast.success("Provider status updated successfully.");
           setSingleData({ ...singleData, status: newStatus });
           fetchBrandDetails();
-          toggleDetails();
         } else {
           toast.error("Update failed. Please try again.");
         }
@@ -176,7 +186,6 @@ const page = () => {
         formData.append("email", singleData.email);
       }
       if (singleData.status !== "") {
-        // Include status update if applicable
         formData.append("status", singleData.status);
       }
 
@@ -208,342 +217,343 @@ const page = () => {
   }, [id]);
 
   return (
-    <div className="providers_container">
-      <div className="providers_heading">
-        <h3>All providers</h3>
-        <button onClick={toggleAdd}>Add Providers</button>
-      </div>
-      <hr />
-      <div className="providers_heading">
-        <div className="filter">
-          <Link className="all" href={""}>
-            All
-          </Link>
-          <Link className="approved" href={""}>
-            Approved
-          </Link>
-          <Link className="rejected" href={""}>
-            Rejected
-          </Link>
+    <PrivateRoute>
+      <div className="providers_container">
+        <div className="providers_heading">
+          <h3>All providers</h3>
+          <button onClick={toggleAdd}>Add Providers</button>
         </div>
-        <input type="search" placeholder="Search" />
-      </div>
-      <table className="table">
-        <thead>
-          <tr className="table_head">
-            <th>S.No</th>
-            <th>Profile</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {brandsData.map((data, index) => (
-            <tr key={index} className="table_body">
-              <td onClick={() => toggleDetails(data._id)}>{index + 1}</td>
-              <td onClick={() => toggleDetails(data._id)}>
-                <div className="table_div">
+        <hr />
+        <div className="providers_heading">
+          <div className="filter">
+            <Link className="all" href={""}>
+              All
+            </Link>
+            <Link className="approved" href={""}>
+              Approved
+            </Link>
+            <Link className="rejected" href={""}>
+              Rejected
+            </Link>
+          </div>
+          <input type="search" placeholder="Search" />
+        </div>
+        <table className="table">
+          <thead>
+            <tr className="table_head">
+              <th>S.No</th>
+              <th>Profile</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {brandData.map((data, index) => (
+              <tr key={index} className="table_body">
+                <td onClick={() => toggleDetails(data._id)}>{index + 1}</td>
+                <td onClick={() => toggleDetails(data._id)}>
+                  <div className="table_div">
+                    <Image
+                      className="logo_providers"
+                      src={`http://localhost:8000/uploads/${data.image}`}
+                      alt={data.image}
+                      width={50}
+                      height={50}
+                      priority={true}
+                    />
+
+                    {data.name}
+                  </div>
+                </td>
+                <td onClick={() => toggleDetails(data._id)}>{data.email}</td>
+                <td onClick={() => toggleDetails(data._id)}>{data.mobile}</td>
+                <td onClick={() => toggleDetails(data._id)}>
+                  <div
+                    className={`status ${
+                      data.status === "Pending" || data.status === "Rejected"
+                        ? "red_bg "
+                        : "green_bg"
+                    }`}
+                  >
+                    {data.status}
+                  </div>
+                </td>
+                <td>
+                  <div className="action_btn">
+                    <button
+                      className="delete_btn"
+                      onClick={() => toggleDelete(data._id)}
+                    >
+                      Delete
+                    </button>
+
+                    <button
+                      className="edit_btn"
+                      onClick={() => toggleEdit(data._id)}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div>
+          {/*Modal for add providers */}
+          <Modal open={popUpAdd} onClose={toggleAdd}>
+            <div className="modal_container">
+              <h1>Add Providers</h1>
+              <div className="details_logo">
+                {preview === null ? (
                   <Image
                     className="logo_providers"
-                    src={`http://localhost:8000/uploads/${data.image}`}
-                    alt={data.image}
-                    width={50}
-                    height={50}
+                    src={camera}
+                    alt={"brand_logo"}
+                    width={150}
+                    height={150}
+                    priority={true}
                   />
-
-                  {data.name}
-                </div>
-              </td>
-              <td onClick={() => toggleDetails(data._id)}>{data.email}</td>
-              <td onClick={() => toggleDetails(data._id)}>{data.mobile}</td>
-              <td onClick={() => toggleDetails(data._id)}>
-                <div
-                  className={`status ${
-                    data.status === "Pending" || data.status === "Rejected"
-                      ? "pending"
-                      : "approved"
-                  }`}
-                >
-                  {data.status}
-                </div>
-              </td>
-              <td>
-                <div className="action_btn">
-                  <button
-                    className="delete_btn"
-                    onClick={() => toggleDelete(data._id)}
-                  >
-                    Delete
-                  </button>
-
-                  <button
-                    className="edit_btn"
-                    onClick={() => toggleEdit(data._id)}
-                  >
-                    Edit
+                ) : (
+                  <Image
+                    className="logo_providers"
+                    src={preview}
+                    alt={"brand_logo"}
+                    width={150}
+                    height={150}
+                    priority={true}
+                  />
+                )}
+                <div className="change_btn">
+                  <button onClick={() => fileInputRef.current.click()}>
+                    Upload
                   </button>
                 </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div>
-        {/*Modal for add providers */}
-        <Modal open={popUpAdd} onClose={toggleAdd}>
-          <div className="modal_container">
-            <h1>Add Providers</h1>
-            <div className="details_logo">
-              {preview === null ? (
-                <Image
-                  className="logo_providers"
-                  src={camera}
-                  alt={camera}
-                  width={150}
-                  height={150}
+              </div>
+              <form className="modal_form" action="">
+                <label htmlFor="Name">
+                  Name<span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                  className="modal_input"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  onChange={handleChange}
                 />
-              ) : (
-                <Image
-                  className="logo_providers"
-                  src={preview}
-                  alt={singleData && singleData.image}
-                  width={150}
-                  height={150}
+                <input
+                  className="hidden modal_input"
+                  type="file"
+                  name="image"
+                  ref={fileInputRef}
+                  placeholder="Brand logo"
+                  onChange={handleFileChange}
                 />
-              )}
+
+                <label htmlFor="Mobile">
+                  Mobile<span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                  className="modal_input"
+                  type="number"
+                  name="mobile"
+                  placeholder="Mobile"
+                  onChange={handleChange}
+                />
+                <label htmlFor="Email">
+                  Email<span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                  className="modal_input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                />
+                <div className="form_btn">
+                  <button onClick={toggleAdd}>Cancel</button>
+                  <button onClick={(e) => handleSubmit(e)}>Submit</button>
+                </div>
+              </form>
+            </div>
+          </Modal>
+
+          {/*Modal for Edit provider */}
+          <Modal open={popUpEdit} onClose={toggleEdit}>
+            <div className="modal_container">
+              <div className="details_logo">
+                {preview === null ? (
+                  <Image
+                    className="logo_providers"
+                    src={`http://localhost:8000/uploads/${
+                      singleData && singleData.image
+                    }`}
+                    alt={singleData && singleData.image}
+                    width={150}
+                    height={150}
+                    priority={true}
+                  />
+                ) : (
+                  <>
+                    <Image
+                      className="logo_providers"
+                      src={preview}
+                      alt={singleData && singleData.image}
+                      width={150}
+                      height={150}
+                      priority={true}
+                    />
+                  </>
+                )}
+              </div>
               <div className="change_btn">
                 <button onClick={() => fileInputRef.current.click()}>
-                  Upload
+                  Change
                 </button>
               </div>
+
+              <form className="modal_form" action="">
+                <label htmlFor="Name">
+                  Name<span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                  className="modal_input"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={singleData && singleData.name}
+                  onChange={handleEditChange}
+                />
+
+                <input
+                  className="hidden modal_input"
+                  type="file"
+                  name="image"
+                  placeholder="Brand logo"
+                  ref={fileInputRef}
+                  onChange={(e) => {
+                    handleFileEditChange(e);
+                  }}
+                />
+
+                <label htmlFor="Mobile">
+                  Mobile<span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                  className="modal_input"
+                  type="number"
+                  name="mobile"
+                  placeholder="Mobile"
+                  value={singleData && singleData.mobile}
+                  onChange={handleEditChange}
+                />
+                <label htmlFor="Email">
+                  Email<span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                  className="modal_input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={singleData && singleData.email}
+                  onChange={handleEditChange}
+                />
+                <div className="form_btn">
+                  <button onClick={(e) => handleUpdate(e)}>Update</button>
+                </div>
+              </form>
             </div>
-            <form className="modal_form" action="">
-              <label htmlFor="Name">
-                Name<span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                className="modal_input"
-                type="text"
-                name="name"
-                value={data.name}
-                placeholder="Name"
-                onChange={handleChange}
-              />
-              <input
-                className="hidden modal_input"
-                type="file"
-                name="image"
-                ref={fileInputRef}
-                placeholder="Brand logo"
-                onChange={(e) => {
-                  handleFileChange(e);
-                }}
-              />
-
-              <label htmlFor="Mobile">
-                Mobile<span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                className="modal_input"
-                type="number"
-                name="mobile"
-                value={data.mobile}
-                placeholder="Mobile"
-                onChange={handleChange}
-              />
-              <label htmlFor="Email">
-                Email<span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                className="modal_input"
-                type="email"
-                name="email"
-                value={data.email}
-                placeholder="Email"
-                onChange={handleChange}
-              />
-              <div className="form_btn">
-                <button onClick={toggleAdd}>Cancel</button>
-                <button onClick={(e) => handleSubmit(e)}>Submit</button>
-              </div>
-            </form>
-          </div>
-        </Modal>
-
-        {/*Modal for Edit provider */}
-        <Modal open={popUpEdit} onClose={toggleEdit}>
-          <div className="modal_container">
-            <div className="details_logo">
-              {preview === null ? (
+          </Modal>
+          {/*Modal for provider details */}
+          <Modal open={popUpDetails} onClose={toggleDetails}>
+            <div className="modal_container detail_modal">
+              {singleData ? (
+                <h1>{singleData && singleData.name}</h1>
+              ) : (
+                <p>Loading Data</p>
+              )}
+              <hr />
+              <div className="details_logo">
                 <Image
                   className="logo_providers"
                   src={`http://localhost:8000/uploads/${
                     singleData && singleData.image
                   }`}
-                  alt={singleData && singleData.image}
+                  alt="logo"
                   width={150}
                   height={150}
+                  priority={true}
                 />
-              ) : (
-                <>
-                  <Image
-                    className="logo_providers"
-                    src={preview}
-                    alt={singleData && singleData.image}
-                    width={150}
-                    height={150}
-                  />
-                </>
+              </div>
+              <hr />
+              <h3>ID: {singleData && singleData._id}</h3>
+              <hr />
+              <h3>Email: {singleData && singleData.email}</h3>
+              <hr />
+              <h3>Mobile: {singleData && singleData.mobile}</h3>
+              <hr />
+              <div className="status">
+                <p
+                  className={` ${
+                    singleData &&
+                    (singleData.status === "Pending" ||
+                      singleData.status === "Rejected")
+                      ? "red_bg"
+                      : "green_bg"
+                  }`}
+                >
+                  Status: {singleData && singleData.status}
+                </p>
+              </div>
+              <hr />
+              {singleData && singleData.status && (
+                <div className="action_btn">
+                  <button
+                    className="ml delete_btn"
+                    onClick={handleStatusUpdate("Rejected")}
+                  >
+                    Reject
+                  </button>
+                  <button
+                    onClick={handleStatusUpdate("Approved")}
+                    className="edit_btn"
+                  >
+                    Approve
+                  </button>
+                </div>
               )}
             </div>
-            <div className="change_btn">
-              <button onClick={() => fileInputRef.current.click()}>
-                Change
-              </button>
-            </div>
+          </Modal>
+          {/*Modal for delete confirmation */}
+          <Modal open={popUpDelete} onClose={toggleDelete}>
+            <div className="modal_container detail_modal">
+              <h2 style={{ textAlign: "center", paddingBottom: "1rem" }}>
+                Are you sure you want to delete {singleData && singleData.name}?
+              </h2>
 
-            <form className="modal_form" action="">
-              <label htmlFor="Name">
-                Name<span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                className="modal_input"
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={singleData && singleData.name}
-                onChange={handleEditChange}
-              />
-
-              <input
-                className="hidden modal_input"
-                type="file"
-                name="image"
-                placeholder="Brand logo"
-                ref={fileInputRef}
-                onChange={(e) => {
-                  handleFileEditChange(e);
-                }}
-              />
-
-              <label htmlFor="Mobile">
-                Mobile<span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                className="modal_input"
-                type="number"
-                name="mobile"
-                placeholder="Mobile"
-                value={singleData && singleData.mobile}
-                onChange={handleEditChange}
-              />
-              <label htmlFor="Email">
-                Email<span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                className="modal_input"
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={singleData && singleData.email}
-                onChange={handleEditChange}
-              />
-              <div className="form_btn">
-                <button onClick={(e) => handleUpdate(e)}>Update</button>
-              </div>
-            </form>
-          </div>
-        </Modal>
-        {/*Modal for provider details */}
-        <Modal open={popUpDetails} onClose={toggleDetails}>
-          <div className="modal_container detail_modal">
-            {singleData ? (
-              <h1>{singleData && singleData.name}</h1>
-            ) : (
-              <p>Loading Data</p>
-            )}
-            <hr />
-            <div className="details_logo">
-              <Image
-                className="logo_providers"
-                src={`http://localhost:8000/uploads/${
-                  singleData && singleData.image
-                }`}
-                alt="logo"
-                width={150}
-                height={150}
-              />
-            </div>
-            <hr />
-            <h3>ID: {singleData && singleData._id}</h3>
-            <hr />
-            <h3>Email: {singleData && singleData.email}</h3>
-            <hr />
-            <h3>Mobile: {singleData && singleData.mobile}</h3>
-            <hr />
-            <div className="status">
-              <p
-                className={` ${
-                  singleData &&
-                  (singleData.status === "Pending" ||
-                    singleData.status === "Rejected")
-                    ? "pending"
-                    : "approved"
-                }`}
-              >
-                Status: {singleData && singleData.status}
-              </p>
-            </div>
-            <hr />
-            {singleData && singleData.status !== "Pending" ? (
-              <p>Status updated</p>
-            ) : (
               <div className="action_btn">
-                <button
-                  className="ml delete_btn"
-                  onClick={handleStatusUpdate("Rejected")}
-                >
-                  Reject
+                <button className="delete_btn" onClick={toggleDelete}>
+                  No
                 </button>
                 <button
-                  onClick={handleStatusUpdate("Approved")}
+                  onClick={() => handleDelete(singleData && singleData._id)}
                   className="edit_btn"
                 >
-                  Approve
+                  Yes
                 </button>
               </div>
-            )}
-          </div>
-        </Modal>
-        {/*Modal for delete confirmation */}
-        <Modal open={popUpDelete} onClose={toggleDelete}>
-          <div className="modal_container detail_modal">
-            <h2 style={{ textAlign: "center", paddingBottom: "1rem" }}>
-              Are you sure you want to delete {singleData && singleData.name}?
-            </h2>
-
-            <div className="action_btn">
-              <button className="delete_btn" onClick={toggleDelete}>
-                No
-              </button>
-              <button
-                onClick={() => handleDelete(singleData && singleData._id)}
-                className="edit_btn"
-              >
-                Yes
-              </button>
             </div>
-          </div>
-        </Modal>
-        <Toaster
-          toastOptions={{ className: "toast" }}
-          position="top-center"
-          richColors="true"
-        />
+          </Modal>
+          <Toaster
+            toastOptions={{ className: "toast" }}
+            position="top-center"
+            richColors="true"
+          />
+        </div>
       </div>
-    </div>
+    </PrivateRoute>
   );
 };
 

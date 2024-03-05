@@ -1,20 +1,27 @@
 .about_container {
-    margin: 2rem 0;
-    color: white;
-    background-color: black;
-    text-align: center;
+  color: white;
+  background-color: var(--secondary_color);
+  text-align: center;
+  height: 80vh;
 
-    h1 {
-        padding: 2rem;
-    }
+  h1 {
+    padding: 4rem 5rem 2rem;
+    font-size: 3rem;
+  }
 
-    .about_content {
-        width: 80%;
-        margin: auto;
-        display: grid;
-        padding: 2rem;
-        column-gap: 40px;
-        row-gap: 40px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+  .about_content {
+    width: 80%;
+    height: 70%;
+    margin: auto;
+    display: grid;
+    padding: 2rem;
+    align-items: center;
+    column-gap: 40px;
+    row-gap: 40px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    h5 {
+      margin-top: 1rem;
+      line-height: 3;
     }
+  }
 }

@@ -10,13 +10,15 @@ const Home = () => {
           <span>DOORSTEP!</span>
         </h1>
         <p>Northeast India’s Leading Auto-mobile Service Company</p>
-        <button>Book service</button>
+        <a className="tel" href="tel:18004192621">
+          <button>Toll free: 1800 419 2621</button>
+        </a>
       </div>
       <div className="car_image">
         <Image
           src={"/assets/car_landing.svg"}
-          width={500}
-          height={500}
+          width={600}
+          height={600}
           alt="car"
         />
       </div>

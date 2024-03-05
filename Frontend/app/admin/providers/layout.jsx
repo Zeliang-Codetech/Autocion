@@ -2,6 +2,8 @@
 import Link from "next/link";
 import "./providers.scss";
 import { usePathname } from "next/navigation";
+import PrivateRoute from "../../../Routes/AdminRoute";
+
 export default function ProvidersLayout({ children }) {
   const pathname = usePathname();
   const providerNav = [
@@ -24,22 +26,24 @@ export default function ProvidersLayout({ children }) {
   ];
 
   return (
-    <div>
-      <nav className="providers_nav">
-        {providerNav.map((link, index) => {
-          const isActive = pathname === link.href;
-          return (
-            <Link
-              key={index}
-              href={link.href}
-              className={`provider_link ${isActive && "active"}`}
-            >
-              {link.title}
-            </Link>
-          );
-        })}
-      </nav>
-      <div>{children}</div>
-    </div>
+    <PrivateRoute>
+      <div>
+        <nav className="providers_nav">
+          {providerNav.map((link, index) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={index}
+                href={link.href}
+                className={`provider_link ${isActive && "active"}`}
+              >
+                {link.title}
+              </Link>
+            );
+          })}
+        </nav>
+        <div>{children}</div>
+      </div>
+    </PrivateRoute>
   );
 }

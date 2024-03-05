@@ -1,0 +1,42 @@
+.orderContainer {
+  width: 100%;
+
+  height: 100%;
+  .orderHeader {
+    text-align: center;
+    padding: 2rem;
+  }
+  .orderContent {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 50rem;
+
+    .orderCard {
+      border-radius: 5px;
+      border: 1px solid rgb(230, 230, 230);
+      .orderCardHeader {
+        padding: 1rem;
+        display: flex;
+        gap: 50px;
+        background-color: rgb(230, 230, 230);
+        p {
+          line-height: 2;
+        }
+      }
+      .orderCardBody {
+        padding: 1rem;
+        .orderDetails {
+          display: flex;
+          gap: 10px;
+          p,
+          span {
+            line-height: 2;
+          }
+        }
+      }
+    }
+  }
+}
