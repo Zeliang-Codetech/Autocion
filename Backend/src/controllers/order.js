@@ -10,7 +10,8 @@ var razorpay = new Razorpay({
 
 export const checkOut = async (req, res) => {
   try {
-    const { name, amount, user, userId, category, provider, model } = req.body;
+    const { name, amount, user, price, userId, category, provider, model } =
+      req.body;
     const order = await razorpay.orders.create({
       amount: Number(amount * 100),
       currency: "INR",
@@ -21,7 +22,7 @@ export const checkOut = async (req, res) => {
       user: user,
       userId: userId,
       amount: amount,
-
+      price: price,
       category: category,
       provider: provider,
       model: model,

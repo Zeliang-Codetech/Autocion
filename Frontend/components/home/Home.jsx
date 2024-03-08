@@ -19,6 +19,7 @@ const Home = () => {
           src={"/assets/car_landing.svg"}
           width={600}
           height={600}
+          layout="responsive"
           alt="car"
         />
       </div>

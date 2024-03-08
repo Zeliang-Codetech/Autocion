@@ -47,8 +47,16 @@ const about = () => {
       <div className="about_content">
         {aboutData.map((data) => {
           return (
-            <div key={data.id}>
-              <Image src={data.image} width={100} height={100} alt="image" />
+            <div key={data.id} className="aboutCard">
+              <div className="aboutImage">
+                <Image
+                  layout="responsive"
+                  src={data.image}
+                  width={0}
+                  height={0}
+                  alt="image"
+                />
+              </div>
               <h5>{data.title}</h5>
               <p>{data.content}</p>
             </div>

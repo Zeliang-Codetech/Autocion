@@ -73,12 +73,16 @@ const page = () => {
                               <p>{formatDate(data.createdAt)}</p>
                             </div>
                             <div>
-                              <p>TOTAL</p>
-                              <p> &#8377; {data.amount}.00</p>
+                              <p>AMOUNT</p>
+                              <p> &#8377; {data.price}.00</p>
                             </div>
                             <div>
                               <p>ORDER ID</p>
                               <p>{data.order_id}</p>
+                            </div>
+                            <div>
+                              <p>Payment ID:</p>
+                              <p>{data.razorpay_payment_id}</p>
                             </div>
                           </div>
                           <div className="orderCardBody">
@@ -97,10 +101,6 @@ const page = () => {
                             <div className="orderDetails">
                               <span>Brand:</span>
                               <p>{data.provider}</p>
-                            </div>
-                            <div className="orderDetails">
-                              <span>Payment ID:</span>
-                              <p>{data.razorpay_payment_id}</p>
                             </div>
                           </div>
                         </div>

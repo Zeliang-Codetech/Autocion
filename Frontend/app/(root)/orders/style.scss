@@ -18,16 +18,16 @@
       border-radius: 5px;
       border: 1px solid rgb(230, 230, 230);
       .orderCardHeader {
-        padding: 1rem;
+        padding: 1rem 2rem;
         display: flex;
-        gap: 50px;
+        justify-content: space-between;
         background-color: rgb(230, 230, 230);
         p {
           line-height: 2;
         }
       }
       .orderCardBody {
-        padding: 1rem;
+        padding: 1rem 2rem;
         .orderDetails {
           display: flex;
           gap: 10px;

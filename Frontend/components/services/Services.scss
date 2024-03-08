@@ -22,3 +22,32 @@
     }
   }
 }
+@media only screen and (max-width: 768px) {
+  .topbar_container {
+    padding: 1rem 2rem; /* Adjust padding for smaller screens */
+  }
+}
+@media only screen and (max-width: 576px) {
+  .services_container {
+    text-align: center;
+
+    h1 {
+      padding: 2rem 4rem 0.5rem;
+      font-size: 1.5rem;
+    }
+    .services_content {
+      width: max-content;
+      display: grid;
+      column-gap: 15px;
+      row-gap: 5px;
+      padding: 0;
+      grid-template-columns: repeat(4, 1fr);
+      .service_link {
+        width: 20vw;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}

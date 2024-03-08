@@ -10,7 +10,20 @@ const Contact = () => {
           <form action="POST">
             <input type="text" placeholder="Fullname" />
             <input type="email" placeholder="Email" />
-            <input type="number" placeholder="Phone" />
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="Phone"
+              maxLength="10"
+              style={{
+                WebkitAppearance: "none" /* Hide spin buttons in WebKit */,
+                MozAppearance: "textfield" /* Hide spin buttons in Firefox */,
+                appearance:
+                  "textfield" /* Hide spin buttons in Edge and Safari */,
+              }}
+            />
+
             <textarea rows="10" cols="20" />
             <button>Submit</button>
           </form>

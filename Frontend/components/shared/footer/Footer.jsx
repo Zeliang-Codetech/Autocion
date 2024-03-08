@@ -27,6 +27,7 @@ export const Footer = () => {
           src={"/assets/logo_white.svg"}
           width={300}
           height={200}
+          layout="responsive"
           alt="logo"
           priority={true}
         />
@@ -52,6 +53,7 @@ export const Footer = () => {
           width={150}
           height={150}
           alt="apps"
+          layout="responsive"
         />
         <Image
           style={{ cursor: "pointer" }}
@@ -59,6 +61,7 @@ export const Footer = () => {
           width={150}
           height={150}
           alt="apps"
+          layout="responsive"
         />
       </div>
       <p>

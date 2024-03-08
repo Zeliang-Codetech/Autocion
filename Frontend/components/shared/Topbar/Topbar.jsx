@@ -7,7 +7,9 @@ import { toast } from "sonner";
 import { useAuth } from "../../../context/auth";
 import { useEffect, useState } from "react";
 import defaultDp from "../../../public/assets/Avatar.png";
-
+import { RiMenu3Line, RiInformationLine } from "react-icons/ri";
+import { GoTools } from "react-icons/go";
+import { MdOutlineClose, MdOutlineHome, MdOutlineMail } from "react-icons/md";
 import {
   MdLogout,
   MdOutlinePerson,
@@ -25,6 +27,12 @@ const Topbar = () => {
 
   const [cart, setCart] = useState([]);
 
+  const [menu, setMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setMenu(!menu);
+  };
+
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const navigate = () => {
@@ -33,7 +41,6 @@ const Topbar = () => {
 
   const handleNavigate = (url) => {
     navigate(url);
-
     toggleDropdown();
   };
 
@@ -48,9 +55,6 @@ const Topbar = () => {
       console.error("Error fetching cart data:", error);
     }
   };
-  useEffect(() => {
-    getCartByUser();
-  }, [cart]);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -67,6 +71,9 @@ const Topbar = () => {
   useEffect(() => {
     setIsLoading(false);
   }, []);
+  useEffect(() => {
+    getCartByUser();
+  }, [auth.userId]);
 
   return (
     <>
@@ -87,6 +94,7 @@ const Topbar = () => {
           <Link className="topbar_links" href="#services">
             SERVICES
           </Link>
+
           <Link className="topbar_links" href="#about">
             ABOUT
           </Link>
@@ -95,7 +103,7 @@ const Topbar = () => {
             CONTACT
           </Link>
         </div>
-        {auth.token ? (
+        {auth && auth.token ? (
           <>
             <div className="profile-dropdown">
               <div className="dp_container" onClick={toggleDropdown}>
@@ -119,44 +127,47 @@ const Topbar = () => {
                 )}
               </div>
               {isOpen && (
-                <div className="dropdown_links_container">
-                  <h4>{userData}</h4>
-                  <hr />
-                  <Link
-                    className="dropdown_links"
-                    onClick={(e) => handleNavigate(e)}
-                    href="/profile"
-                  >
-                    <MdOutlinePerson /> My Profile
-                  </Link>
-                  <hr />
-                  <Link
-                    className="dropdown_links"
-                    onClick={handleNavigate}
-                    href="/orders"
-                  >
-                    <PiPackageLight /> Orders
-                  </Link>
-                  <hr />
+                <>
+                  <div className="dropdown_links_container">
+                    <h4>{userData}</h4>
 
-                  <Link
-                    className="dropdown_links"
-                    onClick={handleNavigate}
-                    href="/cart"
-                  >
-                    <MdOutlineShoppingCart />
-                    Cart ({cart?.length})
-                  </Link>
+                    <hr />
+                    <Link
+                      className="dropdown_links"
+                      onClick={(e) => handleNavigate(e)}
+                      href="/profile"
+                    >
+                      <MdOutlinePerson /> My Profile
+                    </Link>
+                    <hr />
+                    <Link
+                      className="dropdown_links"
+                      onClick={handleNavigate}
+                      href="/orders"
+                    >
+                      <PiPackageLight /> Orders
+                    </Link>
+                    <hr />
 
-                  <hr />
-                  <Link
-                    onClick={handleLogout}
-                    className="dropdown_links"
-                    href="/"
-                  >
-                    <MdLogout /> Logout
-                  </Link>
-                </div>
+                    <Link
+                      className="dropdown_links"
+                      onClick={handleNavigate}
+                      href="/cart"
+                    >
+                      <MdOutlineShoppingCart />
+                      Cart
+                    </Link>
+
+                    <hr />
+                    <Link
+                      onClick={handleLogout}
+                      className="dropdown_links"
+                      href="/"
+                    >
+                      <MdLogout /> Logout
+                    </Link>
+                  </div>
+                </>
               )}
             </div>
           </>
@@ -170,6 +181,148 @@ const Topbar = () => {
               <p style={{ color: "white" }}>Loading..</p>
             )}
           </>
+        )}
+      </div>
+      {/**Mobile Navbar */}
+      <div className="topbar_mobile">
+        <div className="topbar_logo">
+          <Image
+            src={"/assets/logo_white.svg"}
+            width={100}
+            height={100}
+            alt="logo"
+          />
+        </div>
+
+        {!menu && (
+          <RiMenu3Line
+            onClick={toggleMenu}
+            style={{ color: "white", cursor: "pointer", fontSize: "30px" }}
+          />
+        )}
+
+        {menu && (
+          <div className="menu_container" onClick={toggleMenu}>
+            <div className="menuContents">
+              <MdOutlineClose
+                style={{
+                  cursor: "pointer",
+                  fontSize: "30px",
+                  padding: "10px",
+                  marginLeft: "auto",
+                }}
+              />
+
+              {auth && auth.token ? (
+                <>
+                  <div className="profile-dropdown">
+                    <div className="dp_container" onClick={toggleDropdown}>
+                      {auth.image ? (
+                        <Image
+                          className="dp"
+                          onClick={toggleDropdown}
+                          src={auth.image}
+                          alt={"profile_pic"}
+                          width={50}
+                          height={50}
+                        />
+                      ) : (
+                        <Image
+                          className="dp"
+                          src={defaultDp}
+                          alt={"profile_pic"}
+                          width={50}
+                          height={50}
+                        />
+                      )}
+                    </div>
+
+                    <div className="dropdown_links_container">
+                      <h4>{userData}</h4>
+                      <div className="topbar_links_container">
+                        <Link className="topbar_links" href="/">
+                          <MdOutlineHome /> Home
+                        </Link>
+                        <hr />
+                        <Link className="topbar_links" href="#services">
+                          <GoTools /> Services
+                        </Link>
+                        <hr />
+                        <Link className="topbar_links" href="#about">
+                          <RiInformationLine /> About
+                        </Link>
+                        <hr />
+                        <Link className="topbar_links" href="#contact">
+                          <MdOutlineMail /> Contact
+                        </Link>
+                      </div>
+                      <hr />
+                      <Link
+                        className="dropdown_links"
+                        onClick={(e) => handleNavigate(e)}
+                        href="/profile"
+                      >
+                        <MdOutlinePerson /> My Profile
+                      </Link>
+                      <hr />
+                      <Link
+                        className="dropdown_links"
+                        onClick={handleNavigate}
+                        href="/orders"
+                      >
+                        <PiPackageLight /> Orders
+                      </Link>
+                      <hr />
+
+                      <Link
+                        className="dropdown_links"
+                        onClick={handleNavigate}
+                        href="/cart"
+                      >
+                        <MdOutlineShoppingCart />
+                        Cart
+                      </Link>
+
+                      <hr />
+                      <Link
+                        onClick={handleLogout}
+                        className="dropdown_links"
+                        href="/"
+                      >
+                        <MdLogout /> Logout
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="loginContainerMobile">
+                    <div className="topbar_links_container">
+                      <Link className="topbar_links" href="/">
+                        <MdOutlineHome /> Home
+                      </Link>
+                      <hr />
+                      <Link className="topbar_links" href="#services">
+                        <GoTools /> Services
+                      </Link>
+                      <hr />
+                      <Link className="topbar_links" href="#about">
+                        <RiInformationLine /> About
+                      </Link>
+                      <hr />
+                      <Link className="topbar_links" href="#contact">
+                        <MdOutlineMail /> Contact
+                      </Link>
+                    </div>
+                    <h4 className="pleaseLogin">Please login to continue</h4>
+                    <button className="login_btn" onClick={navigate}>
+                      Login
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </>

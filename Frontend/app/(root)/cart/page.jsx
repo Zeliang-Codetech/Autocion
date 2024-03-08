@@ -44,6 +44,7 @@ const page = () => {
   const checkOutHandler = async (products) => {
     try {
       const Subtotal = calculateSubtotal(products);
+      console.log(products);
       for (const element of products) {
         const {
           data: { order },
@@ -53,6 +54,7 @@ const page = () => {
           provider: element.providerName,
           model: element.model,
           amount: Subtotal,
+          price: element.discount,
           user: auth.fullname,
           userId: auth.userId,
           userEmail: auth.email,

@@ -31,3 +31,30 @@
     padding: 1rem;
   }
 }
+@media only screen and (max-width: 768px) {
+}
+@media only screen and (max-width: 576px) {
+  .hvm_container {
+    width: 100%;
+    background-color: var(--tertiary_color);
+    text-align: center;
+    h1 {
+      padding: 1rem 4rem 0.5rem;
+      font-size: 1.5rem;
+    }
+    .hvm_content {
+      width: 80%;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      .hvm_card {
+        width: 100%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+      }
+    }
+  }
+}

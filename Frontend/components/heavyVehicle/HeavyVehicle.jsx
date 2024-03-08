@@ -27,17 +27,19 @@ const HeavyVehicle = () => {
     <div className="hvm_container" id="services">
       <h1>HEAVY MOTOR VEHICLES</h1>
       <div className="hvm_content">
-        <div className="hvm_card">
-          {HMVData.map((data, index) => {
-            return (
-              <div className="hvm_card" onClick={() => setPopUp(true)}>
-                <BasicCard key={index} image={data.image} alt={data.name}>
-                  {data.name}
-                </BasicCard>
-              </div>
-            );
-          })}
-        </div>
+        {HMVData.map((data, index) => {
+          return (
+            <div
+              key={index}
+              className="hvm_card"
+              onClick={() => setPopUp(true)}
+            >
+              <BasicCard image={data.image} alt={data.name}>
+                {data.name}
+              </BasicCard>
+            </div>
+          );
+        })}
       </div>
 
       <Modal open={popUp} onClose={() => setPopUp(false)}>
