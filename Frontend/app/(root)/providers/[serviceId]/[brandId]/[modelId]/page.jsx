@@ -173,10 +173,14 @@ const page = () => {
               selectedServiceId === data.category && (
                 <div key={index} className="service_card">
                   {/* {console.log(data)} */}
-                  <div>
+                  <div
+                    className="imageContainer"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
                     <Image
-                      src={logo}
-                      alt="services"
+                      src={`${process.env.API_KEY}/uploads/${data.image}`}
+                      alt={data.image}
+                      layout="responsive"
                       width={300}
                       height={300}
                       priority
@@ -185,7 +189,7 @@ const page = () => {
                   <div className="card_content">
                     <div className="service_headers">
                       <h2>{data.name}</h2>
-                      <h2>{data.duration} Hrs</h2>
+                      <h2>Duration: {data.duration} Hrs</h2>
                     </div>
                     <div className="description">
                       <p>{data.description}</p>
@@ -197,18 +201,18 @@ const page = () => {
                         </del>
                       </h2>
                       <h2>&#8377; {data.discount}</h2>
-                      <button
-                        onClick={() => {
-                          addToCartHandler(data);
-                        }}
-                        className="book"
-                      >
-                        <span className="addToCart">
-                          <MdOutlineAddShoppingCart />
-                        </span>
-                        Add to cart{" "}
-                      </button>
                     </div>
+                    <button
+                      onClick={() => {
+                        addToCartHandler(data);
+                      }}
+                      className="book"
+                    >
+                      <span className="addToCart">
+                        <MdOutlineAddShoppingCart />
+                      </span>
+                      Add to cart{" "}
+                    </button>
                   </div>
                 </div>
               )
@@ -223,9 +227,10 @@ const page = () => {
                 <Image
                   className="image_vehicle"
                   src={`${process.env.API_KEY}/uploads/${singleVehicle.image}`}
-                  width={200}
-                  height={200}
+                  width={100}
+                  height={100}
                   alt={"Vehicle_Img"}
+                  layout="responsive"
                   priority
                 />
                 <div className="vehicle_name">

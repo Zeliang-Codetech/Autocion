@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react";
 import { BasicCard } from "../../../../../components/cards/cards";
 import Link from "next/link";
 import "./style.scss";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [vehicleModel, setVehicleModel] = useState([]);
+  const router = useRouter();
 
   let selectedBrandId;
   if (typeof window !== "undefined") {
@@ -29,6 +31,7 @@ const page = () => {
   }, []);
 
   const handleLinkClick = (id) => {
+    router.push(`/providers/${selectedServiceId}/${selectedBrandId}/${id}`);
     // Store the id in session storage
     sessionStorage.setItem("selectedModelId", id);
   };
@@ -43,10 +46,10 @@ const page = () => {
       <div key="services" className="services_content">
         {vehicleModel.map((data, index) => {
           return (
-            <Link
+            <div
+              className="brands_links"
               onClick={() => handleLinkClick(data._id)}
               key={index}
-              href={`/providers/${selectedServiceId}/${selectedBrandId}/${data._id}`}
             >
               <BasicCard
                 key={data.name}
@@ -55,7 +58,7 @@ const page = () => {
               >
                 {data.name}
               </BasicCard>
-            </Link>
+            </div>
           );
         })}
       </div>

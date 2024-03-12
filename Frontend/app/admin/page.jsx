@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 export default function page() {
   const router = useRouter();
   const [user, setUser] = useState({
-    email: "",
+    phone: "",
     password: "",
   });
   const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ export default function page() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/api/v1/login/user", {
+    const response = await fetch(`${process.env.API_KEY}/api/v1/login/user`, {
       method: "POST",
       headers: {
         Authorization: `token`,
@@ -49,9 +49,9 @@ export default function page() {
           <form action="Post">
             <input
               onChange={handleChange}
-              name="email"
-              type="email"
-              placeholder="Email"
+              name="phone"
+              type="number"
+              placeholder="Phone"
             />
             <input
               onChange={handleChange}

@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { BasicCard } from "../../../../components/cards/cards";
 import axios from "axios";
-import "./providers.scss";
+import "./style.scss";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [brandData, setBrandsData] = useState([]);
+  const router = useRouter();
   const fetchBrandDetails = async () => {
     try {
       const res = await axios.get(`${process.env.API_KEY}/api/v1/get/brand`);
@@ -22,6 +24,7 @@ const page = () => {
     (brand) => brand.status === "Approved"
   );
   const handleLinkClick = (id) => {
+    router.push(`/providers/${selectedServiceId}/${id}`);
     sessionStorage.setItem("selectedBrandId", id);
   };
   let selectedServiceId;
@@ -34,10 +37,10 @@ const page = () => {
       <div className="providers_client_content">
         {filteredBrandData.map((data, index) => {
           return (
-            <Link
+            <div
+              className="providers_link"
               onClick={() => handleLinkClick(data._id)}
               key={index}
-              href={`/providers/${selectedServiceId}/${data._id}`}
             >
               <BasicCard
                 key={index}
@@ -47,7 +50,7 @@ const page = () => {
                 {" "}
                 <h3>{data.name}</h3>
               </BasicCard>
-            </Link>
+            </div>
           );
         })}
       </div>

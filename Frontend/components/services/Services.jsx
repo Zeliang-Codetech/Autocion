@@ -30,7 +30,7 @@ const Services = () => {
     sessionStorage.setItem("selectedServiceId", id);
   };
   return (
-    <div className="services_container" id="services">
+    <div className="services_container">
       <h1>OUR SERVICES</h1>
       <div className="services_content">
         {serviceData.map((data, index) => {

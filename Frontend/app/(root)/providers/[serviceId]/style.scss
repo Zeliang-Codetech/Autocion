@@ -1,11 +1,11 @@
-.services_container {
+.providers_client_container {
   text-align: center;
 
   h1 {
     padding: 2rem;
   }
 
-  .services_content {
+  .providers_client_content {
     width: 60%;
     margin: auto;
     display: grid;
@@ -14,22 +14,23 @@
     padding: 2rem;
     grid-template-columns: auto auto auto auto;
     justify-content: center;
-    .brands_links {
+    .providers_link {
       width: 14vw;
       display: flex;
       justify-content: center;
     }
   }
 }
+
 @media only screen and (max-width: 768px) {
 }
 @media only screen and (max-width: 576px) {
-  .services_container {
+  .providers_client_container {
     h1 {
       padding: 2rem 0 0 0;
     }
 
-    .services_content {
+    .providers_client_content {
       box-sizing: border-box;
       display: flex;
       padding: 10px;
@@ -38,10 +39,11 @@
       gap: 0;
       margin-bottom: 30rem;
       justify-content: start;
-      .brands_links {
+      .providers_link {
         padding: 3px;
         width: 23.6%;
         height: fit-content;
+        align-items: center;
       }
     }
   }

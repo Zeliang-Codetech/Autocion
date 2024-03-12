@@ -27,6 +27,7 @@
         }
       }
       .orderCardBody {
+        background-color: white;
         padding: 1rem 2rem;
         .orderDetails {
           display: flex;
@@ -34,6 +35,40 @@
           p,
           span {
             line-height: 2;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+}
+@media only screen and (max-width: 576px) {
+  .orderContainer {
+    .orderContent {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 1rem;
+
+      .orderCard {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0;
+        .orderCardHeader {
+          display: flex;
+          gap: 10px;
+          padding: 5px;
+          box-sizing: border-box;
+          width: 100%;
+          p {
+            font-size: 10px;
+          }
+        }
+        .orderCardBody {
+          padding: 5px;
+          p,
+          span {
+            font-size: 10px;
           }
         }
       }

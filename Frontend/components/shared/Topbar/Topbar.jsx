@@ -78,28 +78,28 @@ const Topbar = () => {
   return (
     <>
       <div className="topbar_container">
-        <div className="topbar_logo">
+        <Link className="topbar_logo" href={"/"}>
           <Image
             src={"/assets/logo_white.svg"}
             width={150}
             height={100}
             alt="logo"
           />
-        </div>
+        </Link>
         <div className="topbar_links_container">
           <Link className="topbar_links" href="/">
             HOME
           </Link>
 
-          <Link className="topbar_links" href="#services">
+          <Link className="topbar_links" href="/#services">
             SERVICES
           </Link>
 
-          <Link className="topbar_links" href="#about">
+          <Link className="topbar_links" href="/#about">
             ABOUT
           </Link>
 
-          <Link className="topbar_links" href="#contact">
+          <Link className="topbar_links" href="/#contact">
             CONTACT
           </Link>
         </div>
@@ -185,14 +185,14 @@ const Topbar = () => {
       </div>
       {/**Mobile Navbar */}
       <div className="topbar_mobile">
-        <div className="topbar_logo">
+        <Link className="topbar_logo" href={"/"}>
           <Image
             src={"/assets/logo_white.svg"}
             width={100}
             height={100}
             alt="logo"
           />
-        </div>
+        </Link>
 
         {!menu && (
           <RiMenu3Line
@@ -244,15 +244,15 @@ const Topbar = () => {
                           <MdOutlineHome /> Home
                         </Link>
                         <hr />
-                        <Link className="topbar_links" href="#services">
+                        <Link className="topbar_links" href="/#services">
                           <GoTools /> Services
                         </Link>
                         <hr />
-                        <Link className="topbar_links" href="#about">
+                        <Link className="topbar_links" href="/#about">
                           <RiInformationLine /> About
                         </Link>
                         <hr />
-                        <Link className="topbar_links" href="#contact">
+                        <Link className="topbar_links" href="/#contact">
                           <MdOutlineMail /> Contact
                         </Link>
                       </div>

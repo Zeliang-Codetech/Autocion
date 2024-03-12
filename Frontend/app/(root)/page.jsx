@@ -11,9 +11,14 @@ export default function page() {
     <main>
       <div>
         <Home />
-        <Services />
+        <section id="services">
+          <Services />
+        </section>
+
         <HeavyVehicle />
+
         <About />
+
         <Contact />
       </div>
     </main>

@@ -19,6 +19,7 @@ export default function RootLayout({ children }) {
           <Footer />
         </body>
         <Toaster
+          duration="2000"
           toastOptions={{ className: "toast" }}
           position="top-center"
           richColors="true"

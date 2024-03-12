@@ -4,6 +4,15 @@
   margin: 0;
   padding: 0;
   font-family: "Josefin sans", sans-serif;
+
+}
+html {
+  --top-spacing: 100px;
+  scroll-padding-top: var(--top-spacing);
+}
+body{
+
+  background-color: var(--tertiary_color);
 }
 :root {
   --primary_color: #01b7de;

@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { logo } from "../../../public/assets/logo_white.svg";
 const page = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [cart, setCart] = useState([]);
 
   const getCartByUser = async () => {
@@ -142,13 +142,19 @@ const page = () => {
   //     console.log(error);
   //   }
   // };
-
+  const safetyAndWarantyFees = () => {
+    if (cart.length !== 0) {
+      return 99;
+    } else {
+      return 0;
+    }
+  };
   const calculateSubtotal = () => {
     let subtotal = 0;
     for (let i = 0; i < cart.length; i++) {
       subtotal += parseFloat(cart[i].discount); // Convert price to a floating point number
     }
-    return subtotal;
+    return subtotal + safetyAndWarantyFees();
   };
 
   return (
@@ -172,6 +178,7 @@ const page = () => {
                 <div key={index} className="cartContent">
                   <div className="imageContainer">
                     <Image
+                      layout="responsive"
                       src={`${process.env.API_KEY}/uploads/${data.image}`}
                       width={200}
                       height={150}
@@ -198,31 +205,23 @@ const page = () => {
                       Remove
                     </button>
                   </div>
-                  <button
-                    onClick={() =>
-                      checkOutHandler({
-                        name: data.name,
-                        amount: calculateSubtotal(),
-                        user: auth.fullname,
-                        userId: auth.userId,
-                        userEmail: auth.email,
-                        phone: auth.phone,
-                        category: data.categoryName,
-                        provider: data.providerName,
-                        model: data.model,
-                      })
-                    }
-                  >
-                    Checkout
-                  </button>
                 </div>
               );
             })}
           </div>
           <div className="col-50 checkout">
-            <h1>Checkout</h1>
-            <h2>Subtotal: &#8377; {calculateSubtotal(cart)}</h2>
-            <button onClick={() => checkOutHandler(cart)}>Checkout</button>
+            <h1>Bill details</h1>
+            <div className="sawf">
+              <p>Safety & Warranty fees </p>
+              {cart.length === 0 ? <p>0</p> : <p>&#8377; 99 </p>}
+            </div>
+            <div className="subtotal">
+              <p>Subtotal</p>
+              <p>&#8377; {calculateSubtotal(cart)}</p>
+            </div>
+            <button onClick={() => checkOutHandler(cart)}>
+              Proceed to Checkout
+            </button>
           </div>
         </div>
       </div>
