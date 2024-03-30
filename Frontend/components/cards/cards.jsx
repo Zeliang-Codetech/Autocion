@@ -14,7 +14,7 @@ export const BasicCard = ({ image, alt, children }) => {
         />
       </div>
       <div className="card_children">
-        <div>{children}</div>
+        <p>{children}</p>
       </div>
     </div>
   );

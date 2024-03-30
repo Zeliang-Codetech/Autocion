@@ -6,6 +6,10 @@ const nextConfig = {
   env: {
     API_KEY: process.env.BASE_URL,
     RAZORPAY_ID: process.env.RAZORPAY_ID,
+    EMAIL_JS_SERVICE: process.env.EMAIL_JS_SERVICE,
+    EMAIL_JS_PUBLIC_KEY: process.env.EMAIL_JS_PUBLIC_KEY,
+    TEMPLATE_CODE_1: process.env.TEMPLATE_CODE_1,
+    TEMPLATE_CODE_2: process.env.TEMPLATE_CODE_2,
   },
 };
 

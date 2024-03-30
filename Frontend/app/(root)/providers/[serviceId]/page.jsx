@@ -48,7 +48,7 @@ const page = () => {
                 alt={data.name}
               >
                 {" "}
-                <h3>{data.name}</h3>
+                <p>{data.name}</p>
               </BasicCard>
             </div>
           );

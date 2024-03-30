@@ -49,7 +49,6 @@ const page = () => {
         },
       }
     );
-    console.log(res);
 
     if (res.data.status === 1) {
       setName(res?.data?.user?.fullname);

@@ -1,9 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { BasicCard } from "../cards/cards";
 import "./HeavyVehicle.scss";
+
+import emailjs from "@emailjs/browser";
 import Modal from "../modal/Modal";
+import { toast } from "sonner";
 
 const HeavyVehicle = () => {
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        `${process.env.EMAIL_JS_SERVICE}`,
+        ` ${process.env.TEMPLATE_CODE_2}`,
+        form.current,
+        {
+          publicKey: `${process.env.EMAIL_JS_PUBLIC_KEY}`,
+        }
+      )
+      .then(
+        () => {
+          toast.success("Email sent.");
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
   const [popUp, setPopUp] = useState(false);
 
   const HMVData = [
@@ -48,12 +74,25 @@ const HeavyVehicle = () => {
             Enquiry
           </h2>
 
-          <form className="hvm_form">
-            <input placeholder="Name" />
-            <input placeholder="Contact Details" />
-            <input placeholder="Email" />
-            <input placeholder="Vehicle Details" />
-            <input placeholder="Location" />
+          <form className="hvm_form" ref={form} onSubmit={sendEmail}>
+            <input placeholder="Name" name="from_name" />
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="Phone"
+              maxLength="10"
+              name="from_phone"
+              style={{
+                WebkitAppearance: "none" /* Hide spin buttons in WebKit */,
+                MozAppearance: "textfield" /* Hide spin buttons in Firefox */,
+                appearance:
+                  "textfield" /* Hide spin buttons in Edge and Safari */,
+              }}
+            />
+            <input placeholder="Email" name="from_email" />
+            <input placeholder="Vehicle Details" name="vehicle_details" />
+            <input placeholder="Location" name="location" />
 
             <div className="action_btn">
               <button style={{ width: "100%" }} className="edit_btn">

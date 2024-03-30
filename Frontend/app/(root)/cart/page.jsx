@@ -44,7 +44,7 @@ const page = () => {
   const checkOutHandler = async (products) => {
     try {
       const Subtotal = calculateSubtotal(products);
-      console.log(products);
+
       for (const element of products) {
         const {
           data: { order },
@@ -83,6 +83,8 @@ const page = () => {
             color: "#3399cc",
           },
         };
+        // const rzp = new window.Razorpay({ key });
+        // rzp.createPayment(options); // key not required
         var rzp1 = new window.Razorpay(options);
         rzp1.open();
       }

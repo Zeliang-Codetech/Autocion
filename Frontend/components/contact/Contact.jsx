@@ -1,16 +1,44 @@
 import Image from "next/image";
 import "./Contact.scss";
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 
 const Contact = () => {
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        `${process.env.EMAIL_JS_SERVICE}`,
+        `${process.env.TEMPLATE_CODE_1}`,
+        form.current,
+        {
+          publicKey: `${process.env.EMAIL_JS_PUBLIC_KEY}`,
+        }
+      )
+      .then(
+        () => {
+          toast.success("Email sent.");
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
+
   return (
     <div className="contact_container" id="contact">
       <h1>CONTACT</h1>
       <div className="contact_content">
         <div className="form">
-          <form action="POST">
-            <input type="text" placeholder="Fullname" />
-            <input type="email" placeholder="Email" />
+          <form ref={form} onSubmit={sendEmail}>
+            <input type="text" placeholder="Fullname" name="from_name" />
+            <input type="email" placeholder="Email" name="from_email" />
             <input
+              name="from_phone"
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
@@ -24,7 +52,12 @@ const Contact = () => {
               }}
             />
 
-            <textarea rows="10" cols="20" />
+            <textarea
+              name="message"
+              placeholder="Message"
+              rows="10"
+              cols="20"
+            />
             <button>Submit</button>
           </form>
         </div>

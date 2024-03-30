@@ -1,0 +1,17 @@
+.addressAnchor {
+  color: var(--primary_color);
+}
+.addressAnchor:hover {
+  text-decoration: underline;
+}
+.table_body {
+  td {
+    padding: 1rem;
+  }
+}
+.addressModal {
+  p,
+  h1 {
+    padding: 1rem;
+  }
+}

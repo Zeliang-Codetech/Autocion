@@ -27,7 +27,6 @@ router.get(
   authentication,
   getCartItemsByUser,
   fetchOrderByUser,
-
   getUserbyId
 );
 router.get("/get/single/user", authentication, getSingleUser);

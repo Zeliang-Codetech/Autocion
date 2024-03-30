@@ -23,7 +23,7 @@ const page = () => {
     const res = await axios.get(
       `${process.env.API_KEY}/api/v1/get/brand/${selectedBrandId}`
     );
-    console.log(res);
+
     setVehicleModel(res.data.model);
   };
   useEffect(() => {

@@ -75,6 +75,7 @@ const page = () => {
         <div className="login_image_container">
           <Image
             src={"/assets/logo_black.svg"}
+            layout="responsive"
             width={450}
             height={450}
             alt="logo"

@@ -52,18 +52,17 @@ const page = () => {
     setPopUpDetails(!popUpDetails);
     setId(id);
   };
-  const toggleEdit = async (id) => {
-    setPopUpEdit(!popUpEdit);
-    setId(id);
-    await fetchSingleCategory(id);
-  };
+  // const toggleEdit = async (id) => {
+  //   setPopUpEdit(!popUpEdit);
+  //   setId(id);
+  //   await fetchSingleService(id);
+  // };
 
   const fetchServiceData = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/get/service");
-
-      setServiceData(res.data.getService);
+      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/service`);
       console.log(res);
+      setServiceData(res.data.getService);
     } catch (error) {
       console.log(error);
     }
@@ -72,9 +71,9 @@ const page = () => {
   const fetchSingleService = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/get/service/${id}`
+        `${process.env.API_KEY}/api/v1/get/service/${id}`
       );
-      console.log(res);
+
       setSingleServiceData(res.data.service);
     } catch (error) {
       console.log(error);
@@ -84,7 +83,7 @@ const page = () => {
   const handleFileChange = (e) => {
     const [file] = e.target.files;
     setData({ ...data, image: file });
-    console.log(e.target.files);
+
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
   };
@@ -101,7 +100,7 @@ const page = () => {
       formData.append("image", data.image);
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/create/service",
+        `${process.env.API_KEY}/api/v1/create/service`,
         formData
       );
       console.log(res);
@@ -134,12 +133,12 @@ const page = () => {
     }
   };
 
-  const handleDelete = async (_id) => {
+  const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/delete/service/${_id}`
+        `${process.env.API_KEY}/api/v1/delete/service/${id}`
       );
-
+      console.log(id);
       if (res.data.status === 1) {
         toast.success(`Service has been deleted.`);
       }
@@ -152,12 +151,11 @@ const page = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
-    console.log(name, value);
   };
 
   const fetchProviderData = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/get/brand`);
+      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/brand`);
 
       setProviderData(res.data.brandsData);
     } catch (error) {
@@ -166,7 +164,7 @@ const page = () => {
   };
   const fetchCategory = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/get/category");
+      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/category`);
 
       setCategoryData(res.data.getCategory);
     } catch (error) {
@@ -176,7 +174,7 @@ const page = () => {
   const fetchModel = async () => {
     try {
       const res = await axios.get(`${process.env.API_KEY}/api/v1/get/model`);
-      console.log(res);
+
       setModelData(res.data.vehicleModels);
     } catch (error) {
       console.log(error);
@@ -387,7 +385,7 @@ const page = () => {
                       <div className="table_div">
                         <Image
                           className="logo_providers"
-                          src={`http://localhost:8000/uploads/${data.image}`}
+                          src={`${process.env.API_KEY}/uploads/${data.image}`}
                           alt={data.image}
                           width={50}
                           height={50}
@@ -422,12 +420,12 @@ const page = () => {
                           Delete
                         </button>
 
-                        <button
+                        {/* <button
                           className="edit_btn"
                           onClick={() => toggleEdit(data._id)}
                         >
                           Edit
-                        </button>
+                        </button> */}
                       </div>
                     </td>
                   </tr>

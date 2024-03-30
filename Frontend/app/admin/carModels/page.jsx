@@ -59,12 +59,10 @@ const page = () => {
     const fieldName = e.target.name;
     const newValue = e.target.value;
     setData({ ...data, [fieldName]: newValue });
-    console.log(newValue);
   };
 
   const handleEditChange = (e) => {
     setSingleData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    console.log(e.target.value);
   };
   const handleFileChange = (e) => {
     const [file] = e.target.files;
@@ -88,7 +86,6 @@ const page = () => {
         `${process.env.API_KEY}/api/v1/get/model/${id}`
       );
       setSingleData(res.data.vehicleModel);
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +94,6 @@ const page = () => {
   const fetchBrandDetails = async () => {
     try {
       const res = await axios.get(`${process.env.API_KEY}/api/v1/get/brand`);
-
       setBrandsData(res.data.brandsData);
     } catch (error) {
       console.log(error);
@@ -106,7 +102,7 @@ const page = () => {
 
   const fetchVehicleData = async () => {
     const res = await axios.get(`${process.env.API_KEY}/api/v1/get/model`);
-    console.log(res);
+
     setVehicleData(res.data.vehicleModels);
   };
 

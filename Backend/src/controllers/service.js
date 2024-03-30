@@ -76,7 +76,7 @@ export const createService = async (req, res, next) => {
 
 export const getAllService = async (req, res, next) => {
   try {
-    const getService = await Service.find({ ...req.body })
+    const getService = await Service.find(req.body)
       .populate("provider")
       .populate("category");
     if (getService) {
@@ -88,8 +88,8 @@ export const getAllService = async (req, res, next) => {
           _id: service._id,
           provider: service.provider._id,
           providerName: service.provider.name,
-          category: service.category._id,
-          categoryName: service.category.name,
+          category: service.category ? service.category._id : null,
+          categoryName: service.category ? service.category.name : null,
           name: service.name,
           tags: service.tags,
           description: service.description,
@@ -128,8 +128,9 @@ export const getServiceById = async (req, res, next) => {
           _id: service._id,
           provider: service.provider._id,
           providerName: service.provider.name,
-          category: service.category._id,
-          categoryName: service.category.name,
+          providerName: service.provider.name,
+          category: service.category ? service.category._id : null,
+          categoryName: service.category ? service.category.name : null,
           name: service.name,
           tags: service.tags,
           description: service.description,

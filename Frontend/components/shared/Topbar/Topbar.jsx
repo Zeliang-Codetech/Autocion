@@ -65,6 +65,7 @@ const Topbar = () => {
       token: "",
     });
     toast.success("Logout Successfull");
+    router.push("/");
     toggleDropdown();
   };
 

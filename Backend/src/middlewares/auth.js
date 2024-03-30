@@ -104,17 +104,20 @@ export const authentication = async (req, res, next) => {
       let decode = jwt.verify(req.headers.authorization, process.env.SECRET);
       if (decode) {
         req.user = await User.findById(decode._id);
-        next();
+        return next();
       } else {
-        res.json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized" });
       }
     } else {
-      res.json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
   } catch (error) {
-    res.json(error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: error });
   }
 };
+
 //admin acceess
 export const isAdmin = async (req, res, next) => {
   try {

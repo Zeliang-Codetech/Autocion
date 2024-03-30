@@ -112,15 +112,16 @@
       border-radius: 3rem;
       box-shadow: 0px 4px 41px 0px rgba(0, 0, 0, 0.25);
       .card_container {
+        box-sizing: border-box;
         height: 550px;
         text-align: center;
         display: grid;
         grid-auto-rows: auto;
         grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
+        gap: 20px;
 
         .card_content {
-          width: 100%;
+          width: 90%;
           height: fit-content;
         }
       }
@@ -157,7 +158,107 @@ p {
     align-items: center;
   }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
+  .container {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    .service_container {
+      padding: 0;
+      width: 100%;
+      .nav {
+        padding: 0.1rem;
+
+        .provider_links {
+          .provider_link {
+            min-width: 20%;
+            font-size: 11px;
+          }
+        }
+      }
+
+      .service_card {
+        .card_content {
+          .service_headers {
+            h2 {
+              padding: 0;
+            }
+          }
+          .description {
+            p {
+              padding: 10px 0;
+              font-size: 10px;
+            }
+          }
+          .prices {
+            gap: 3px;
+            h2 {
+              font-size: 11px;
+              padding: 5px 0;
+            }
+          }
+          .book {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .addToCart {
+              text-align: center;
+            }
+          }
+          .service_headers {
+            h2 {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    .brand_model_container {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0;
+      .container_flux {
+        box-sizing: border-box;
+        h2 {
+          padding: 2rem 0;
+        }
+        overflow-y: scroll;
+        padding: 1rem;
+        border-radius: 3rem;
+        box-shadow: 0px 4px 41px 0px rgba(0, 0, 0, 0.25);
+        .card_container {
+          text-align: center;
+          height: 100%;
+          gap: 10px;
+
+          .card_content {
+            width: 80%;
+          }
+        }
+      }
+    }
+  }
+  p {
+    padding: 1rem 0;
+  }
+  .single_vehicle {
+    border-radius: 5px;
+    height: max-content;
+    .single_card_content {
+      .image_vehicle {
+        width: 100px !important;
+        height: 100px !important;
+      }
+    }
+    .vehicle_name {
+      gap: 10px;
+      padding: 1rem;
+      h1 {
+        font-size: 19px;
+      }
+    }
+  }
 }
 @media only screen and (max-width: 576px) {
   .container {

@@ -37,7 +37,7 @@ const page = () => {
         const res = await axios.get(
           `${process.env.API_KEY}/api/v1/get/user/${auth.userId}`
         );
-        console.log(res);
+
         setOrders(res.data.orders);
       }
     } catch (error) {

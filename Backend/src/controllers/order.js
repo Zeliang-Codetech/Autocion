@@ -2,6 +2,8 @@ import { OrderModel } from "../models/order.model.js";
 import ErrorHandler from "../utils/utility-class.js";
 import Razorpay from "razorpay";
 import crypto from "crypto";
+import { sendmail } from "../sendMail.js";
+import { sendConfirmationEmail } from "../middlewares/sendMail.js";
 
 var razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_ID,
@@ -10,8 +12,17 @@ var razorpay = new Razorpay({
 
 export const checkOut = async (req, res) => {
   try {
-    const { name, amount, user, price, userId, category, provider, model } =
-      req.body;
+    const {
+      name,
+      amount,
+      user,
+      price,
+      userId,
+      category,
+      provider,
+      model,
+      userEmail,
+    } = req.body;
     const order = await razorpay.orders.create({
       amount: Number(amount * 100),
       currency: "INR",
@@ -21,6 +32,7 @@ export const checkOut = async (req, res) => {
       name: name,
       user: user,
       userId: userId,
+      userEmail: userEmail,
       amount: amount,
       price: price,
       category: category,
@@ -33,10 +45,9 @@ export const checkOut = async (req, res) => {
     console.log(error);
   }
 };
-export const paymentVerification = async (req, res) => {
+export const paymentVerification = async (req, res, next) => {
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
     req.body;
-
   const body_data = razorpay_order_id + "|" + razorpay_payment_id;
   const expect = crypto
     .createHmac("sha256", process.env.RAZORPAY_SECRET)
@@ -64,12 +75,11 @@ export const paymentVerification = async (req, res) => {
     );
 
     res.redirect(
-      `http://localhost:3000/success?payment_id=${razorpay_payment_id}`
+      `${process.env.CLIENT_URL}/success?payment_id=${razorpay_payment_id}`
     );
-    return;
+    sendConfirmationEmail(req, res, next);
   } else {
-    res.redirect("http://localhost:3000/failed");
-    return;
+    res.redirect(`${process.env.CLIENT_URL}/failed`);
   }
 };
 
@@ -117,6 +127,23 @@ export const getOrderById = async (req, res, next) => {
       });
     } else {
       return next(new ErrorHandler("Cannot fetch.", 400));
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error });
+  }
+};
+
+export const getOrders = async (req, res) => {
+  try {
+    const orders = await OrderModel.find(req.body);
+    if (orders) {
+      res.status(200).json({
+        status: 1,
+        success: true,
+        message: "Orders fetched",
+        orders: orders,
+      });
     }
   } catch (error) {
     console.log(error);

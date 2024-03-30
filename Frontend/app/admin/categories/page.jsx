@@ -50,7 +50,7 @@ const page = () => {
   const fetchSingleCategory = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/get/category/${id}`
+        `${process.env.API_KEY}/api/v1/get/category/${id}`
       );
       setSingleData(res.data.category);
     } catch (error) {
@@ -59,7 +59,7 @@ const page = () => {
   };
   const fetchCategory = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/get/category");
+      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/category`);
       setCategoryData(res.data.getCategory);
     } catch (error) {
       console.log(error);
@@ -74,15 +74,14 @@ const page = () => {
       });
 
       const submit = await axios.post(
-        "http://localhost:8000/api/v1/create/category",
+        `${process.env.API_KEY}/api/v1/create/category`,
         formdata
       );
       if (submit.data.status === 1) {
         toast.success("Provider details added successfully.");
-        reset();
       }
       fetchCategory();
-      addProviders({
+      setData({
         name: "",
         image: "",
       });
@@ -94,7 +93,7 @@ const page = () => {
   const handleDelete = async (_id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/delete/category/${_id}`
+        `${process.env.API_KEY}/api/v1/delete/category/${_id}`
       );
 
       if (res.data.status === 1) {
@@ -131,7 +130,7 @@ const page = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:8000/api/v1/update/category/${singleData._id}`,
+        `${process.env.API_KEY}/api/v1/update/category/${singleData._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -166,8 +165,8 @@ const page = () => {
   }, [id]);
 
   return (
-    <PrivateRoute>
-      <>
+    <>
+      <PrivateRoute>
         <h3 className="categories_heading">Categories</h3>
         <div className="categories_container">
           <div className="category_form ">
@@ -398,8 +397,8 @@ const page = () => {
             </div>
           </Modal>
         </div>
-      </>
-    </PrivateRoute>
+      </PrivateRoute>
+    </>
   );
 };
 

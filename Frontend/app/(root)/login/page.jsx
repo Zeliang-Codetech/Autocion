@@ -4,7 +4,6 @@ import "./login.scss";
 import Link from "next/link";
 import { Toaster, toast } from "sonner";
 import { useState } from "react";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../context/auth";
 const page = () => {
@@ -39,7 +38,7 @@ const page = () => {
         body: new URLSearchParams(user).toString(),
       });
       const data = await response.json();
-      console.log(data);
+
       if (data.status === 1) {
         toast.success("Login successfull");
         setAuth({ ...auth, fullname: data.fullname, token: data.token });
@@ -63,6 +62,7 @@ const page = () => {
         <div className="login_image_container">
           <Image
             src={"/assets/logo_black.svg"}
+            layout="responsive"
             width={450}
             height={450}
             alt="logo"

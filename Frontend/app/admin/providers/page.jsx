@@ -67,7 +67,6 @@ const page = () => {
   const handleFileChange = (e) => {
     const [file] = e.target.files;
     setData({ ...data, image: file });
-    console.log(e.target.files);
 
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
@@ -83,7 +82,7 @@ const page = () => {
   const fetchSingleBrand = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/get/brand/${id}`
+        `${process.env.API_KEY}/api/v1/get/brand/${id}`
       );
       setSingleData(res.data.response);
     } catch (error) {
@@ -93,7 +92,7 @@ const page = () => {
 
   const fetchBrandDetails = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/get/brand`);
+      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/brand`);
 
       setBrandsData(res.data.brandsData);
     } catch (error) {
@@ -110,7 +109,7 @@ const page = () => {
       });
 
       const submit = await axios.post(
-        "http://localhost:8000/api/v1/create/brand",
+        `${process.env.API_KEY}/api/v1/create/brand`,
         formdata
       );
       if (submit.data.status === 1) {
@@ -133,7 +132,7 @@ const page = () => {
       e.preventDefault();
       try {
         const response = await axios.put(
-          `http://localhost:8000/api/v1/update/brand/${id}`,
+          `${process.env.API_KEY}/api/v1/update/brand/${id}`,
           { ...singleData, status: newStatus }
         );
 
@@ -154,7 +153,7 @@ const page = () => {
   const handleDelete = async (_id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/delete/brand/${_id}`
+        `${process.env.API_KEY}/api/v1/delete/brand/${_id}`
       );
 
       if (res.data.status === 1) {
@@ -190,7 +189,7 @@ const page = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:8000/api/v1/update/brand/${singleData._id}`,
+        `${process.env.API_KEY}/api/v1/update/brand/${singleData._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
