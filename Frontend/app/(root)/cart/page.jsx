@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/auth";
 
 import "./style.scss";
-import Link from "next/link";
+
 import Image from "next/image";
 import { toast } from "sonner";
 import axios from "axios";
-import { logo } from "../../../public/assets/logo_white.svg";
+
 const page = () => {
   const [auth] = useAuth();
   const [cart, setCart] = useState([]);
