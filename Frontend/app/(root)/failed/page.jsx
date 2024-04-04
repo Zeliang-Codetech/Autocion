@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.scss";
+import "../success/style.scss";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/assets/logo_white.svg";
@@ -13,8 +13,8 @@ const page = () => {
           <div className="image">
             <Image src={logo} width={300} height={200} alt="logo" />
           </div>
-          <h1>Order complete!</h1>
-          <h3>Thank you for choosing us.</h3>
+          <h1>Payment failed!</h1>
+
           <Link className="link" href={"/orders"}>
             My orders <FaArrowRightLong />
           </Link>

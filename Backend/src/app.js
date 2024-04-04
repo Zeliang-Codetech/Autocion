@@ -7,7 +7,6 @@ import appointmentRoute from "./routes/appointment.js";
 import categoryRoute from "./routes/category.js";
 import order from "./routes/orders.js";
 import cart from "./routes/cart.js";
-
 import { connectDB } from "./utils/dbConnect.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import cors from "cors";

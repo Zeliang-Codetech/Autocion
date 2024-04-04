@@ -1,8 +1,6 @@
 import { OrderModel } from "../models/order.model.js";
 import { sendmail } from "../sendMail.js";
 
-import fs from "fs";
-import path from "path";
 export const sendConfirmationEmail = async (req, res) => {
   try {
     const { razorpay_payment_id } = req.body;

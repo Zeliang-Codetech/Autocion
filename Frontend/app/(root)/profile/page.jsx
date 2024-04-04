@@ -34,8 +34,10 @@ const page = () => {
   const [popUp, setPopUp] = useState(false);
 
   const fileInputRef = useRef();
-
-  const userString = localStorage.getItem("user");
+  let userString;
+  if (typeof window !== "undefined") {
+    userString = localStorage.getItem("user");
+  }
   const userObject = JSON.parse(userString);
   const _id = userObject.user._id;
   const token = userObject.token;

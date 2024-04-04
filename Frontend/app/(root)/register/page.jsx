@@ -4,6 +4,7 @@ import Image from "next/image";
 import "../login/login.scss";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
 const page = () => {
   const [userData, setUserData] = useState({
     fullname: "",
@@ -15,13 +16,13 @@ const page = () => {
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const Router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setIsLoading(true);
-
     try {
+      e.preventDefault();
+      setError(null);
+      setIsLoading(true);
       const isMatched = userData.password === userData.confirmPassword;
       if (isMatched) {
         const formData = new URLSearchParams();
@@ -52,6 +53,7 @@ const page = () => {
             password: "",
             confirmPassword: "",
           });
+          Router.push("/login");
         } else {
           setError(data.message);
         }
@@ -98,8 +100,17 @@ const page = () => {
             <input
               name="phone"
               onChange={handleChange}
-              type="number"
-              placeholder="Mobile number"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="Phone"
+              maxLength="10"
+              style={{
+                WebkitAppearance: "none" /* Hide spin buttons in WebKit */,
+                MozAppearance: "textfield" /* Hide spin buttons in Firefox */,
+                appearance:
+                  "textfield" /* Hide spin buttons in Edge and Safari */,
+              }}
             />
             <input
               name="password"

@@ -10,6 +10,7 @@ const nextConfig = {
     EMAIL_JS_PUBLIC_KEY: process.env.EMAIL_JS_PUBLIC_KEY,
     TEMPLATE_CODE_1: process.env.TEMPLATE_CODE_1,
     TEMPLATE_CODE_2: process.env.TEMPLATE_CODE_2,
+    TOKEN: process.env.TOKEN,
   },
 };
 

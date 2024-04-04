@@ -48,10 +48,19 @@ export default function page() {
           <Image src={logo} width={500} height={300} alt="logo" />
           <form action="Post">
             <input
-              onChange={handleChange}
               name="phone"
-              type="number"
+              type="text"
+              onChange={handleChange}
+              inputMode="numeric"
+              pattern="[0-9]*"
               placeholder="Phone"
+              maxLength="10"
+              style={{
+                WebkitAppearance: "none" /* Hide spin buttons in WebKit */,
+                MozAppearance: "textfield" /* Hide spin buttons in Firefox */,
+                appearance:
+                  "textfield" /* Hide spin buttons in Edge and Safari */,
+              }}
             />
             <input
               onChange={handleChange}

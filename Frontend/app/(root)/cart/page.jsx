@@ -2,22 +2,35 @@
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/auth";
-
 import "./style.scss";
-
 import Image from "next/image";
 import { toast } from "sonner";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [auth] = useAuth();
   const [cart, setCart] = useState([]);
+  const [address, setAddress] = useState({});
+  const Router = useRouter();
+  // let userString;
+  // // if (typeof window !== "undefined") {
+  // //   userString = localStorage.getItem("user");
+  // // }
+  // // const userObject = JSON.parse(userString);
+  // // const _id = userObject.user._id;
+  // // const token = userObject.token;
 
   const getCartByUser = async () => {
     try {
       if (auth && auth.token) {
         const res = await axios.get(
-          `${process.env.API_KEY}/api/v1/get/user/${auth.userId}`
+          `${process.env.API_KEY}/api/v1/get/user/${auth.userId}`,
+          {
+            headers: {
+              Authorization: auth.token,
+            },
+          }
         );
 
         setCart(res.data.cart);
@@ -41,52 +54,79 @@ const page = () => {
     }
   };
 
+  const fetchUser = async () => {
+    if (auth && auth.userId) {
+      try {
+        const res = await axios.get(
+          `${process.env.API_KEY}/api/v1/get/user/${auth.userId}`,
+          {
+            headers: {
+              Authorization: auth.token,
+            },
+          }
+        );
+        setAddress(res.data.user.address);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
   const checkOutHandler = async (products) => {
     try {
-      const Subtotal = calculateSubtotal(products);
+      if (address) {
+        const Subtotal = calculateSubtotal(products);
+        for (const element of products) {
+          const {
+            data: { order },
+          } = await axios.post(
+            `${process.env.API_KEY}/api/v1/payment/checkout`,
+            {
+              name: element.name,
+              category: element.categoryName,
+              provider: element.providerName,
+              model: element.model,
+              amount: Subtotal,
+              price: element.discount,
+              user: auth.fullname,
+              userId: auth.userId,
+              userEmail: auth.email,
+              phone: auth.phone,
+            }
+          );
 
-      for (const element of products) {
-        const {
-          data: { order },
-        } = await axios.post(`${process.env.API_KEY}/api/v1/payment/checkout`, {
-          name: element.name,
-          category: element.categoryName,
-          provider: element.providerName,
-          model: element.model,
-          amount: Subtotal,
-          price: element.discount,
-          user: auth.fullname,
-          userId: auth.userId,
-          userEmail: auth.email,
-          phone: auth.phone,
-        });
-
-        var options = {
-          key: process.env.RAZORPAY_ID, // Enter the Key ID generated from the Dashboard
-          amount: Subtotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-          currency: order.currency,
-          name: "Autocion", // your business name
-          description: "Test Transaction",
-          order_id: order.id, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-          callback_url: `${process.env.API_KEY}/api/v1/payment/payment/verification`,
-          prefill: {
-            // We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-            id: auth.userId,
-            name: auth.fullname, // your customer's name
-            email: auth.email,
-            contact: auth.phone, // Provide the customer's phone number for better conversion rates
-          },
-          notes: {
-            address: "Razorpay Corporate Office",
-          },
-          theme: {
-            color: "#3399cc",
-          },
-        };
-        // const rzp = new window.Razorpay({ key });
-        // rzp.createPayment(options); // key not required
-        var rzp1 = new window.Razorpay(options);
-        rzp1.open();
+          var options = {
+            key: process.env.RAZORPAY_ID, // Enter the Key ID generated from the Dashboard
+            amount: Subtotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            currency: order.currency,
+            name: "Autocion", // your business name
+            description: "Test Transaction",
+            order_id: order.id, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            callback_url: `${process.env.API_KEY}/api/v1/payment/payment/verification`,
+            prefill: {
+              // We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+              id: auth.userId,
+              name: auth.fullname, // your customer's name
+              email: auth.email,
+              contact: auth.phone, // Provide the customer's phone number for better conversion rates
+            },
+            notes: {
+              address: "Razorpay Corporate Office",
+            },
+            theme: {
+              color: "#3399cc",
+            },
+          };
+          // const rzp = new window.Razorpay({ key });
+          // rzp.createPayment(options); // key not required
+          var rzp1 = new window.Razorpay(options);
+          rzp1.open();
+        }
+      } else {
+        toast.error("Please add address to continue.");
+        Router.push("/profile");
       }
     } catch (error) {
       console.log(error);

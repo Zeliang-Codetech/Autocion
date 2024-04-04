@@ -32,7 +32,7 @@ const page = () => {
       const response = await fetch(`${process.env.API_KEY}/api/v1/login/user`, {
         method: "POST",
         headers: {
-          Authorization: `token`,
+          Authorization: process.env.TOKEN,
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams(user).toString(),
@@ -40,8 +40,14 @@ const page = () => {
       const data = await response.json();
 
       if (data.status === 1) {
-        toast.success("Login successfull");
-        setAuth({ ...auth, fullname: data.fullname, token: data.token });
+        toast.success("Login successful");
+        setAuth({
+          ...auth,
+          fullname: data.user.fullname, // Access fullname from data.user
+          token: data.token, // Access token from data
+        });
+
+        // Store user data in localStorage
         localStorage.setItem("user", JSON.stringify(data));
 
         router.push("/");
@@ -72,9 +78,18 @@ const page = () => {
           <form action="Post">
             <input
               name="phone"
+              type="text"
               onChange={handleChange}
-              type="number"
+              inputMode="numeric"
+              pattern="[0-9]*"
               placeholder="Phone"
+              maxLength="10"
+              style={{
+                WebkitAppearance: "none" /* Hide spin buttons in WebKit */,
+                MozAppearance: "textfield" /* Hide spin buttons in Firefox */,
+                appearance:
+                  "textfield" /* Hide spin buttons in Edge and Safari */,
+              }}
             />
             <input
               name="password"
