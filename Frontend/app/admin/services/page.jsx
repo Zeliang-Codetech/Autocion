@@ -469,7 +469,7 @@ const page = () => {
           <div className="details_logo">
             <Image
               className="logo_providers"
-              src={`http://localhost:8000/uploads/${
+              src={`${process.env.API_KEY}/uploads/${
                 singleServiceData && singleServiceData.image
               }`}
               alt="logo"

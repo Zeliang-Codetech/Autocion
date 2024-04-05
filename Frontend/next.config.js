@@ -3,6 +3,11 @@ const nextConfig = {
   images: {
     domains: ["localhost"],
   },
+
+  images: {
+    unoptimized: true,
+  },
+
   env: {
     API_KEY: process.env.BASE_URL,
     RAZORPAY_ID: process.env.RAZORPAY_ID,

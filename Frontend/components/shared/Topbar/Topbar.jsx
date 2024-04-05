@@ -117,16 +117,18 @@ const Topbar = () => {
                       className="dp"
                       onClick={toggleDropdown}
                       src={auth.image}
+                      layout="responsive"
                       alt={"profile_pic"}
-                      width={40}
+                      width={20}
                       height={40}
                     />
                   ) : (
                     <Image
                       className="dp"
+                      layout="responsive"
                       src={defaultDp}
                       alt={"profile_pic"}
-                      width={40}
+                      width={20}
                       height={40}
                     />
                   )}

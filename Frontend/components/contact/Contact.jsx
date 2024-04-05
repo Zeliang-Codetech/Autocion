@@ -1,14 +1,16 @@
+"use client";
 import Image from "next/image";
 import "./Contact.scss";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 
 const Contact = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useRef();
   const sendEmail = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     emailjs
       .sendForm(
         `${process.env.EMAIL_JS_SERVICE}`,
@@ -21,7 +23,7 @@ const Contact = () => {
       .then(
         () => {
           toast.success("Email sent.");
-          console.log("SUCCESS!");
+          setIsLoading(false);
         },
         (error) => {
           console.log("FAILED...", error.text);
@@ -58,7 +60,7 @@ const Contact = () => {
               rows="10"
               cols="20"
             />
-            <button>Submit</button>
+            <button> {isLoading ? "Submitting..." : "Submit"}</button>
           </form>
         </div>
         <div className="image">

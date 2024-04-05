@@ -211,7 +211,7 @@ const page = () => {
                       <div className="table_div">
                         <Image
                           className="logo_providers"
-                          src={`http://localhost:8000/uploads/${data.image}`}
+                          src={`${process.env.API_KEY}/uploads/${data.image}`}
                           alt={data.image}
                           width={50}
                           height={50}
@@ -290,7 +290,7 @@ const page = () => {
               <div className="details_logo">
                 <Image
                   className="logo_providers"
-                  src={`http://localhost:8000/uploads/${
+                  src={`${process.env.API_KEY}/uploads/${
                     singleData && singleData.image
                   }`}
                   alt="logo"
@@ -323,7 +323,7 @@ const page = () => {
                 {preview === null ? (
                   <Image
                     className="logo_providers"
-                    src={`http://localhost:8000/uploads/${
+                    src={`${process.env.API_KEY}/uploads/${
                       singleData && singleData.image
                     }`}
                     alt={singleData && singleData.image}

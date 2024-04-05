@@ -32,8 +32,8 @@
   width: fit-content;
 
   .dp {
-    width: auto;
-    height: auto;
+    width: 50px !important;
+    height: auto !important;
     border: 0.5px solid var(--primary_color);
     border-radius: 100%;
   }

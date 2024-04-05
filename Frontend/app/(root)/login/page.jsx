@@ -12,6 +12,7 @@ const page = () => {
     phone: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [error, setError] = useState(null);
   const handleChange = (e) => {
@@ -20,6 +21,7 @@ const page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
     try {
       if (user.phone === "") {
         setError("Email field cannot be empty.");
@@ -98,7 +100,10 @@ const page = () => {
               placeholder="Password"
             />
 
-            <button onClick={handleSubmit}>Login</button>
+            <button disabled={isLoading} onClick={handleSubmit}>
+              {" "}
+              {isLoading ? "Login in..." : "Login"}
+            </button>
           </form>
           <p className={`${error ? "error" : "visibility_hidden"}`}>{error}</p>
           <div className="no_acc">

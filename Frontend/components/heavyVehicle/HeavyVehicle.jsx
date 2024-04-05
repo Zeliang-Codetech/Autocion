@@ -7,14 +7,15 @@ import Modal from "../modal/Modal";
 import { toast } from "sonner";
 
 const HeavyVehicle = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useRef();
   const sendEmail = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     emailjs
       .sendForm(
         `${process.env.EMAIL_JS_SERVICE}`,
-        ` ${process.env.TEMPLATE_CODE_2}`,
+        `${process.env.TEMPLATE_CODE_2}`,
         form.current,
         {
           publicKey: `${process.env.EMAIL_JS_PUBLIC_KEY}`,
@@ -23,7 +24,7 @@ const HeavyVehicle = () => {
       .then(
         () => {
           toast.success("Email sent.");
-          console.log("SUCCESS!");
+          setIsLoading(false);
         },
         (error) => {
           console.log("FAILED...", error.text);
@@ -95,8 +96,12 @@ const HeavyVehicle = () => {
             <input placeholder="Location" name="location" />
 
             <div className="action_btn">
-              <button style={{ width: "100%" }} className="edit_btn">
-                Submit
+              <button
+                disabled={isLoading}
+                style={{ width: "100%" }}
+                className="edit_btn"
+              >
+                {isLoading ? "Sending..." : "Send"}
               </button>
             </div>
           </form>

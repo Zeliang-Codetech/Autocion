@@ -3,22 +3,22 @@ import "./Footer.scss";
 import Link from "next/link";
 export const Footer = () => {
   const footerLinks = [
-    {
-      title: "Terms of Use",
-      href: "/terms_of_use",
-    },
+    // {
+    //   title: "Terms of Use",
+    //   href: "/terms_of_use",
+    // },
     {
       title: "Privacy Policy",
       href: "/privacy_policy",
     },
-    {
-      title: "FAQ",
-      href: "/faq",
-    },
-    {
-      title: "Refund Policy",
-      href: "/refund_policy",
-    },
+    // {
+    //   title: "FAQ",
+    //   href: "/faq",
+    // },
+    // {
+    //   title: "Refund Policy",
+    //   href: "/refund_policy",
+    // },
   ];
   return (
     <div className="footer_container">
@@ -50,17 +50,19 @@ export const Footer = () => {
         <Image
           style={{ cursor: "pointer" }}
           src={"/assets/playstore.svg"}
-          width={150}
-          height={150}
+          width={100}
+          height={100}
           alt="apps"
+          className="apps"
           layout="responsive"
         />
         <Image
           style={{ cursor: "pointer" }}
           src={"/assets/appstore.svg"}
-          width={150}
-          height={150}
+          width={100}
+          height={100}
           alt="apps"
+          className="apps"
           layout="responsive"
         />
       </div>
