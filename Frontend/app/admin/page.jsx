@@ -12,12 +12,14 @@ export default function page() {
     phone: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const handleChange = (e) => {
     setUser(() => ({ ...user, [e.target.name]: e.target.value }));
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const response = await fetch(`${process.env.API_KEY}/api/v1/login/user`, {
       method: "POST",
       headers: {
@@ -68,8 +70,8 @@ export default function page() {
               type="password"
               placeholder="Password"
             />
-            <button type="submit" onClick={handleSubmit}>
-              Login
+            <button disabled={isLoading} type="submit" onClick={handleSubmit}>
+              {isLoading ? "Login In..." : "Login"}
             </button>
           </form>
           <p className="error">{error}</p>
