@@ -9,7 +9,6 @@ import { Toaster, toast } from "sonner";
 import camera from "../../../public/assets/camera.svg";
 import PrivateRoute from "../../../Routes/AdminRoute";
 import "../providers/providers.scss";
-
 const page = () => {
   const [popUpAdd, setPopUpAdd] = useState(false);
   const [popUpDetails, setPopUpDetails] = useState(false);
@@ -17,19 +16,15 @@ const page = () => {
   const [popUpEdit, setPopUpEdit] = useState(false);
 
   const [data, setData] = useState({
+    //for submitting
     name: "",
     image: "",
     brand: "",
   });
 
-  const [singleData, setSingleData] = useState({
-    _id: "",
-    name: "",
-    image: "",
-    brand: "",
-  });
-
+  const [singleData, setSingleData] = useState({});
   const [brandData, setBrandsData] = useState([]);
+
   const [vehicleData, setVehicleData] = useState([]);
 
   const [id, setId] = useState("");
@@ -46,91 +41,74 @@ const page = () => {
     setPreview(null);
     setPopUpAdd(!popUpAdd);
   };
-
   const toggleEdit = async (id) => {
     setPopUpEdit(!popUpEdit);
     setId(id);
     await fetchSingleModel(id);
   };
-
   const toggleDetails = (id) => {
     setPopUpDetails(!popUpDetails);
     setId(id);
   };
-
   const toggleDelete = (id) => {
     setPopUpDelete(!popUpDelete);
     setId(id);
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData({ ...data, [name]: value });
+    const fieldName = e.target.name;
+    const newValue = e.target.value;
+    setData({ ...data, [fieldName]: newValue });
   };
 
   const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setSingleData((prev) => ({ ...prev, [name]: value }));
+    setSingleData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setData({ ...data, image: file });
+    const [file] = e.target.files;
+    setData({ ...data, image: file });
+    console.log(e.target.files);
 
-      const objectUrl = URL.createObjectURL(file);
-      setPreview(objectUrl);
-    }
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
   };
-
   const handleFileEditChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSingleData((prev) => ({ ...prev, image: file }));
+    const [file] = e.target.files;
+    setSingleData((prev) => ({ ...prev, image: file }));
 
-      const objectUrl = URL.createObjectURL(file);
-      setPreview(objectUrl);
-    }
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
   };
 
-  const fetchSingleModel = async (id) => {
+  const fetchSingleModel = async () => {
     try {
       const res = await axios.get(
         `${process.env.API_KEY}/api/v1/get/model/${id}`
       );
-      if (res.data?.vehicleModel) {
-        setSingleData(res.data.vehicleModel);
-      }
+      setSingleData(res.data.vehicleModel);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
   const fetchBrandDetails = async () => {
     try {
       const res = await axios.get(`${process.env.API_KEY}/api/v1/get/brand`);
-      if (res.data?.brandsData) {
-        setBrandsData(res.data.brandsData);
-      }
+      setBrandsData(res.data.brandsData);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
   const fetchVehicleData = async () => {
-    try {
-      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/model`);
-      if (res.data?.vehicleModels) {
-        setVehicleData(res.data.vehicleModels);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    const res = await axios.get(`${process.env.API_KEY}/api/v1/get/model`);
+
+    setVehicleData(res.data.vehicleModels);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
+      e.preventDefault();
       const formdata = new FormData();
       Object.entries(data).forEach(([key, value]) => {
         formdata.append(key, value);
@@ -140,47 +118,52 @@ const page = () => {
         `${process.env.API_KEY}/api/v1/create/model`,
         formdata
       );
-      if (submit.data?.status === 1) {
+      if (submit.data.status === 1) {
         toast.success("Car Model added successfully.");
-        fetchVehicleData();
-        toggleAdd();
       }
+      fetchVehicleData();
+      setData({
+        name: "",
+        brand: "",
+        image: "",
+      });
+      toggleAdd();
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     try {
       const res = await axios.delete(
-        `${process.env.API_KEY}/api/v1/delete/model/${id}`
+        `${process.env.API_KEY}/api/v1/delete/model/${_id}`
       );
-      if (res.data?.status === 1) {
-        toast.success("Model has been deleted.");
-        fetchVehicleData();
-        toggleDelete();
+
+      if (res.data.status === 1) {
+        toast.success(`Model has been deleted.`);
       }
+      fetchVehicleData();
+      toggleDelete();
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
   const handleUpdate = async (e) => {
-    e.preventDefault();
     try {
+      e.preventDefault();
       const formData = new FormData();
       formData.append("id", singleData._id);
 
-      if (singleData.name) {
+      if (singleData.name !== "") {
         formData.append("name", singleData.name);
       }
-      if (singleData.image) {
+      if (singleData.image !== "") {
         formData.append("image", singleData.image);
       }
-      if (singleData.brand) {
+      if (singleData.mobile !== "") {
         formData.append("brand", singleData.brand);
       }
-
       const response = await axios.put(
         `${process.env.API_KEY}/api/v1/update/model/${singleData._id}`,
         formData,
@@ -189,7 +172,7 @@ const page = () => {
         }
       );
 
-      if (response.data?.status === 1) {
+      if (response.data.status === 1) {
         toast.success("Model updated successfully.");
         fetchVehicleData();
         toggleEdit();
@@ -197,7 +180,7 @@ const page = () => {
         toast.error("Model update failed.");
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -205,11 +188,8 @@ const page = () => {
     fetchBrandDetails();
     fetchVehicleData();
   }, []);
-
   useEffect(() => {
-    if (id) {
-      fetchSingleModel(id);
-    }
+    fetchSingleModel();
   }, [id]);
 
   return (
@@ -240,27 +220,31 @@ const page = () => {
               <th>S.No</th>
               <th>Profile</th>
               <th>Provider</th>
+
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {vehicleData.map((data, index) => (
-              <tr key={data._id} className="table_body">
+              <tr key={index} className="table_body">
                 <td onClick={() => toggleDetails(data._id)}>{index + 1}</td>
                 <td onClick={() => toggleDetails(data._id)}>
                   <div className="table_div">
                     <Image
                       className="logo_providers"
                       src={`${process.env.API_KEY}/uploads/${data.image}`}
-                      alt={data.name}
+                      alt={data.image}
                       width={50}
                       height={50}
                       priority={true}
                     />
+
                     {data.name}
                   </div>
                 </td>
-                <td onClick={() => toggleDetails(data._id)}>{data.brandName}</td>
+                <td onClick={() => toggleDetails(data._id)}>
+                  {data.brandName}
+                </td>
                 <td>
                   <div className="action_btn">
                     <button
@@ -269,6 +253,7 @@ const page = () => {
                     >
                       Delete
                     </button>
+
                     <button
                       className="edit_btn"
                       onClick={() => toggleEdit(data._id)}
@@ -282,93 +267,16 @@ const page = () => {
           </tbody>
         </table>
         <div>
-          {/* Modal for add providers */}
+          {/*Modal for add providers */}
           <Modal open={popUpAdd} onClose={toggleAdd}>
             <div className="modal_container">
               <h1>Add Car Model</h1>
               <div className="details_logo">
-                {preview ? (
-                  <Image
-                    className="logo_providers"
-                    src={preview}
-                    alt="brand_logo"
-                    width={150}
-                    height={150}
-                    priority={true}
-                  />
-                ) : (
+                {preview === null ? (
                   <Image
                     className="logo_providers"
                     src={camera}
-                    alt="brand_logo"
-                    width={150}
-                    height={150}
-                    priority={true}
-                  />
-                )}
-                               <div className="change_btn">
-                  <button onClick={() => fileInputRef.current.click()}>
-                    Upload
-                  </button>
-                </div>
-              </div>
-              <form className="modal_form" onSubmit={handleSubmit}>
-                <label htmlFor="brand">
-                  Provider<span style={{ color: "red" }}>*</span>
-                </label>
-                <select
-                  onChange={handleChange}
-                  className="modal_input"
-                  name="brand"
-                  value={data.brand}
-                  required
-                >
-                  <option value="">Select the provider</option>
-                  {brandData.map((brand) => (
-                    <option key={brand._id} value={brand._id}>
-                      {brand.name}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="name">
-                  Name<span style={{ color: "red" }}>*</span>
-                </label>
-                <input
-                  className="modal_input"
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={data.name}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  className="hidden modal_input"
-                  type="file"
-                  name="image"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                />
-
-                <div className="form_btn">
-                  <button type="button" onClick={toggleAdd}>
-                    Cancel
-                  </button>
-                  <button type="submit">Submit</button>
-                </div>
-              </form>
-            </div>
-          </Modal>
-
-          {/* Modal for Edit provider */}
-          <Modal open={popUpEdit} onClose={toggleEdit}>
-            <div className="modal_container">
-              <div className="details_logo">
-                {preview ? (
-                  <Image
-                    className="logo_providers"
-                    src={preview}
-                    alt={singleData.name}
+                    alt={"brand_logo"}
                     width={150}
                     height={150}
                     priority={true}
@@ -376,8 +284,8 @@ const page = () => {
                 ) : (
                   <Image
                     className="logo_providers"
-                    src={`${process.env.API_KEY}/uploads/${singleData.image}`}
-                    alt={singleData.name}
+                    src={preview}
+                    alt={"brand_logo"}
                     width={150}
                     height={150}
                     priority={true}
@@ -385,31 +293,29 @@ const page = () => {
                 )}
                 <div className="change_btn">
                   <button onClick={() => fileInputRef.current.click()}>
-                    Change
+                    Upload
                   </button>
                 </div>
               </div>
-
-              <form className="modal_form" onSubmit={handleUpdate}>
-                <label htmlFor="brand">
+              <form className="modal_form" action="">
+                <label htmlFor="Name">
                   Provider<span style={{ color: "red" }}>*</span>
                 </label>
                 <select
-                  onChange={handleEditChange}
+                  onChange={handleChange}
                   className="modal_input"
                   name="brand"
-                  value={singleData.brand}
-                  required
                 >
-                  <option value="">Select the provider</option>
-                  {brandData.map((brand) => (
-                    <option key={brand._id} value={brand._id}>
-                      {brand.name}
-                    </option>
-                  ))}
+                  <option>Select the provider</option>
+                  {brandData.map((data, index) => {
+                    return (
+                      <option key={index} value={data._id}>
+                        {data.name}
+                      </option>
+                    );
+                  })}
                 </select>
-
-                <label htmlFor="name">
+                <label htmlFor="Name">
                   Name<span style={{ color: "red" }}>*</span>
                 </label>
                 <input
@@ -417,63 +323,176 @@ const page = () => {
                   type="text"
                   name="name"
                   placeholder="Name"
-                  value={singleData.name}
+                  onChange={handleChange}
+                />
+                <input
+                  className="hidden modal_input"
+                  type="file"
+                  name="image"
+                  ref={fileInputRef}
+                  placeholder="Brand logo"
+                  onChange={handleFileChange}
+                />
+
+                <div className="form_btn">
+                  <button onClick={toggleAdd}>Cancel</button>
+                  <button onClick={(e) => handleSubmit(e)}>Submit</button>
+                </div>
+              </form>
+            </div>
+          </Modal>
+
+          {/*Modal for Edit provider */}
+          <Modal open={popUpEdit} onClose={toggleEdit}>
+            <div className="modal_container">
+              <div className="details_logo">
+                {preview === null ? (
+                  <Image
+                    className="logo_providers"
+                    src={`${process.env.API_KEY}/uploads/${
+                      singleData && singleData.image
+                    }`}
+                    alt={singleData && singleData.name}
+                    width={150}
+                    height={150}
+                    priority={true}
+                  />
+                ) : (
+                  <>
+                    <Image
+                      className="logo_providers"
+                      src={preview}
+                      alt={singleData && singleData.name}
+                      width={150}
+                      height={150}
+                      priority={true}
+                    />
+                  </>
+                )}
+              </div>
+              <div className="change_btn">
+                <button onClick={() => fileInputRef.current.click()}>
+                  Change
+                </button>
+              </div>
+
+              <form className="modal_form" action="">
+                <label htmlFor="Mobile">
+                  Provider<span style={{ color: "red" }}>*</span>
+                </label>
+                <select
+                  onChange={handleChange}
+                  className="modal_input"
+                  name="brand"
+                >
+                  <option>Select the provider</option>
+                  {brandData.map((data, index) => {
+                    return (
+                      <option
+                        selected
+                        key={index}
+                        name={data.name}
+                        value={data._id}
+                      >
+                        {data.name}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                <label htmlFor="Name">
+                  Name<span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                  className="modal_input"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={singleData ? singleData.name : ""}
                   onChange={handleEditChange}
-                  required
                 />
 
                 <input
                   className="hidden modal_input"
                   type="file"
                   name="image"
+                  placeholder="Brand logo"
                   ref={fileInputRef}
-                  onChange={handleFileEditChange}
+                  onChange={(e) => {
+                    handleFileEditChange(e);
+                  }}
                 />
 
                 <div className="form_btn">
-                  <button type="button" onClick={toggleEdit}>
-                    Cancel
-                  </button>
-                  <button type="submit">Update</button>
+                  <button onClick={(e) => handleUpdate(e)}>Update</button>
                 </div>
               </form>
             </div>
           </Modal>
-
-          {/* Modal for provider details */}
+          {/*Modal for provider details */}
           <Modal open={popUpDetails} onClose={toggleDetails}>
             <div className="modal_container detail_modal">
               {singleData ? (
-                <>
-                  <h1>{singleData.name}</h1>
-                  <hr />
-                  <div className="details_logo">
-                    <Image
-                      className="logo_providers"
-                      src={`${process.env.API_KEY}/uploads/${singleData.image}`}
-                      alt={singleData.name}
-                      width={150}
-                      height={150}
-                      priority={true}
-                    />
-                  </div>
-                  <hr />
-                  <h3>ID: {singleData._id}</h3>
-                  <hr />
-                  <h3>Provider: {singleData.brandName}</h3>
-                  <hr />
-                </>
+                <h1>{singleData && singleData.name}</h1>
               ) : (
-                <p>Loading Data...</p>
+                <p>Loading Data</p>
               )}
+              <hr />
+              <div className="details_logo">
+                <Image
+                  className="logo_providers"
+                  src={`${process.env.API_KEY}/uploads/${
+                    singleData && singleData.image
+                  }`}
+                  alt="logo"
+                  width={150}
+                  height={150}
+                  priority={true}
+                />
+              </div>
+              <hr />
+              <h3>ID: {singleData && singleData._id}</h3>
+              <hr />
+              <h3>Provider: {singleData && singleData.brandName}</h3>
+              <hr />
+              {/*               
+              <div className="status">
+                <p
+                  className={` ${
+                    singleData &&
+                    (singleData.status === "Pending" ||
+                      singleData.status === "Rejected")
+                      ? "red_bg"
+                      : "green_bg"
+                  }`}
+                >
+                  Status: {singleData && singleData.status}
+                </p>
+              </div>
+              <hr />
+              {singleData && singleData.status && (
+                <div className="action_btn">
+                  <button
+                    className="ml delete_btn"
+                    onClick={handleStatusUpdate("Rejected")}
+                  >
+                    Reject
+                  </button>
+                  <button
+                    onClick={handleStatusUpdate("Approved")}
+                    className="edit_btn"
+                  >
+                    Approve
+                  </button>
+                </div>
+              )} */}
             </div>
           </Modal>
-
-          {/* Modal for delete confirmation */}
+          {/*Modal for delete confirmation */}
           <Modal open={popUpDelete} onClose={toggleDelete}>
             <div className="modal_container detail_modal">
               <h2 style={{ textAlign: "center", paddingBottom: "1rem" }}>
-                Are you sure you want to delete {singleData.name}?
+                Are you sure you want to delete {singleData && singleData.name}?
               </h2>
 
               <div className="action_btn">
@@ -481,7 +500,7 @@ const page = () => {
                   No
                 </button>
                 <button
-                  onClick={() => handleDelete(singleData._id)}
+                  onClick={() => handleDelete(singleData && singleData._id)}
                   className="edit_btn"
                 >
                   Yes
@@ -489,7 +508,6 @@ const page = () => {
               </div>
             </div>
           </Modal>
-
           <Toaster
             toastOptions={{ className: "toast" }}
             position="top-center"
@@ -502,4 +520,3 @@ const page = () => {
 };
 
 export default page;
-
