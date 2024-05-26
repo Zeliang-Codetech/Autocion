@@ -16,14 +16,9 @@ const page = () => {
   let userObject = "";
   userObject = typeof window !== "undefined" ? localStorage.getItem("user") : "";
 useEffect(()=>{
-      if (userObject) {
-    try {
+      if (userObject != undefined) {
       userObject = JSON.parse(userString);
-    } catch (error) {
-      // console.error("Error parsing user data from localStorage:", error);
-      // do nothing 
-    }
-  }
+    } 
 }, []);
 
   // Extract userId from userObject if available
