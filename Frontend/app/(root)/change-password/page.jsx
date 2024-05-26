@@ -16,7 +16,7 @@ const page = () => {
   let userObject = "";
   userObject = typeof window !== "undefined" ? localStorage.getItem("user") : "";
 useEffect(()=>{
-    if (userObject) {
+      if (userObject) {
     try {
       userObject = JSON.parse(userString);
     } catch (error) {
@@ -24,7 +24,7 @@ useEffect(()=>{
       // do nothing 
     }
   }
-, []);
+}, []);
 
   // Extract userId from userObject if available
   const userId = userObject ? userObject.user._id : null;
