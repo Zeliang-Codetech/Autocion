@@ -34,7 +34,7 @@ const page = () => {
   const [popUp, setPopUp] = useState(false);
 
   const fileInputRef = useRef();
-  let userString;
+  // let userString;
   // Retrieve user data from localStorage if available
   let userString = "";
   userString = typeof window !== "undefined" ? localStorage.getItem("user") : "";
