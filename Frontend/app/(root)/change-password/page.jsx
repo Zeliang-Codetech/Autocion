@@ -13,13 +13,14 @@ const page = () => {
   const [error, setError] = useState(null);
   const router = useRouter();
  // Retrieve user data from localStorage if available
-  let userObject = null;
-  const userString = typeof window !== "undefined" ? localStorage.getItem("user") : null;
+  let userObject = "";
+  const userString = typeof window !== "undefined" ? localStorage.getItem("user") : "";
   if (userString) {
     try {
       userObject = JSON.parse(userString);
     } catch (error) {
-      console.error("Error parsing user data from localStorage:", error);
+      // console.error("Error parsing user data from localStorage:", error);
+      // do nothing 
     }
   }
 
