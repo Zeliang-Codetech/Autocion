@@ -9,7 +9,7 @@ import { Toaster, toast } from "sonner";
 import camera from "../../../public/assets/camera.svg";
 import PrivateRoute from "../../../Routes/AdminRoute";
 import "../providers/providers.scss";
-useEffect(()=>{
+
    const page = () => {
   const [popUpAdd, setPopUpAdd] = useState(false);
   const [popUpDetails, setPopUpDetails] = useState(false);
@@ -519,6 +519,5 @@ useEffect(()=>{
     </PrivateRoute>
   );
 }; 
-}, []);
 
 export default page;
