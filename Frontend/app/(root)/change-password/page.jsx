@@ -1,5 +1,5 @@
 "use client";
-import React, {  useState } from "react";
+import React, {useEffect,  useState } from "react";
 import "./style.scss";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -14,8 +14,9 @@ const page = () => {
   const router = useRouter();
  // Retrieve user data from localStorage if available
   let userObject = "";
-  const userString = typeof window !== "undefined" ? localStorage.getItem("user") : "";
-  if (userString) {
+  userObject = typeof window !== "undefined" ? localStorage.getItem("user") : "";
+useEffect(()=>{
+    if (userObject) {
     try {
       userObject = JSON.parse(userString);
     } catch (error) {
@@ -23,6 +24,7 @@ const page = () => {
       // do nothing 
     }
   }
+, []);
 
   // Extract userId from userObject if available
   const userId = userObject ? userObject.user._id : null;
