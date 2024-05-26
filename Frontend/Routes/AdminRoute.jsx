@@ -28,7 +28,7 @@ const PrivateRoute = ({ children }) => {
       router.push("/admin");
     }
       return isAuthenticated ? children : null;
-  }, [router]);
+  }, []);
 
 
 };
