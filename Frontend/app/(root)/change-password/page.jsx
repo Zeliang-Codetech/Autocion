@@ -12,9 +12,12 @@ const page = () => {
   });
   const [error, setError] = useState(null);
   const router = useRouter();
-  const userString = localStorage.getItem("user");
-  const userObject = JSON.parse(userString);
-  const userId = userObject.user._id;
+  // ensure browser specific API's like local storage is only run on a browser environment and not on the server side
+    useEffect(() => {
+     const userString = localStorage.getItem("user");
+     const userObject = JSON.parse(userString);
+     const userId = userObject.user._id;
+  }, [])
   const handleChange = async (e) => {
     setPassword({ ...password, [e.target.name]: e.target.value });
   };
