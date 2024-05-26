@@ -43,9 +43,10 @@ const page = () => {
     userString = localStorage.getItem("user");
   }
   const userObject = JSON.parse(userString); 
- }, []);
   const _id = userObject.user._id;
   const token = userObject.token;
+ }, []);
+
 
   const fetchUser = async () => {
     const res = await axios.get(
