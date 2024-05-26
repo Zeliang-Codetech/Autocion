@@ -35,10 +35,15 @@ const page = () => {
 
   const fileInputRef = useRef();
   let userString;
-  if (typeof window !== "undefined") {
+  // Retrieve user data from localStorage if available
+  let userString = "";
+  userString = typeof window !== "undefined" ? localStorage.getItem("user") : "";
+ useEffect(()=>{
+     if (typeof window !== "undefined") {
     userString = localStorage.getItem("user");
   }
-  const userObject = JSON.parse(userString);
+  const userObject = JSON.parse(userString); 
+ }, []);
   const _id = userObject.user._id;
   const token = userObject.token;
 
