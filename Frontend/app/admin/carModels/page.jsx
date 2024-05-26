@@ -9,6 +9,7 @@ import { Toaster, toast } from "sonner";
 import camera from "../../../public/assets/camera.svg";
 import PrivateRoute from "../../../Routes/AdminRoute";
 import "../providers/providers.scss";
+
 const Page = () => {
   const [popUpAdd, setPopUpAdd] = useState(false);
   const [popUpDetails, setPopUpDetails] = useState(false);
