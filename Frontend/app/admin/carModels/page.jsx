@@ -9,14 +9,13 @@ import { Toaster, toast } from "sonner";
 import camera from "../../../public/assets/camera.svg";
 import PrivateRoute from "../../../Routes/AdminRoute";
 import "../providers/providers.scss";
-const page = () => {
+const Page = () => {
   const [popUpAdd, setPopUpAdd] = useState(false);
   const [popUpDetails, setPopUpDetails] = useState(false);
   const [popUpDelete, setPopUpDelete] = useState(false);
   const [popUpEdit, setPopUpEdit] = useState(false);
 
   const [data, setData] = useState({
-    //for submitting
     name: "",
     image: "",
     brand: "",
@@ -24,7 +23,6 @@ const page = () => {
 
   const [singleData, setSingleData] = useState({});
   const [brandData, setBrandsData] = useState([]);
-
   const [vehicleData, setVehicleData] = useState([]);
 
   const [id, setId] = useState("");
@@ -41,15 +39,18 @@ const page = () => {
     setPreview(null);
     setPopUpAdd(!popUpAdd);
   };
+
   const toggleEdit = async (id) => {
     setPopUpEdit(!popUpEdit);
     setId(id);
     await fetchSingleModel(id);
   };
+
   const toggleDetails = (id) => {
     setPopUpDetails(!popUpDetails);
     setId(id);
   };
+
   const toggleDelete = (id) => {
     setPopUpDelete(!popUpDelete);
     setId(id);
@@ -64,14 +65,15 @@ const page = () => {
   const handleEditChange = (e) => {
     setSingleData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
   const handleFileChange = (e) => {
     const [file] = e.target.files;
     setData({ ...data, image: file });
-    console.log(e.target.files);
 
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
   };
+
   const handleFileEditChange = (e) => {
     const [file] = e.target.files;
     setSingleData((prev) => ({ ...prev, image: file }));
@@ -80,11 +82,9 @@ const page = () => {
     setPreview(objectUrl);
   };
 
-  const fetchSingleModel = async () => {
+  const fetchSingleModel = async (id) => {
     try {
-      const res = await axios.get(
-        `${process.env.API_KEY}/api/v1/get/model/${id}`
-      );
+      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/model/${id}`);
       setSingleData(res.data.vehicleModel);
     } catch (error) {
       console.log(error);
@@ -101,23 +101,23 @@ const page = () => {
   };
 
   const fetchVehicleData = async () => {
-    const res = await axios.get(`${process.env.API_KEY}/api/v1/get/model`);
-
-    setVehicleData(res.data.vehicleModels);
+    try {
+      const res = await axios.get(`${process.env.API_KEY}/api/v1/get/model`);
+      setVehicleData(res.data.vehicleModels);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       const formdata = new FormData();
       Object.entries(data).forEach(([key, value]) => {
         formdata.append(key, value);
       });
 
-      const submit = await axios.post(
-        `${process.env.API_KEY}/api/v1/create/model`,
-        formdata
-      );
+      const submit = await axios.post(`${process.env.API_KEY}/api/v1/create/model`, formdata);
       if (submit.data.status === 1) {
         toast.success("Car Model added successfully.");
       }
@@ -135,10 +135,7 @@ const page = () => {
 
   const handleDelete = async (_id) => {
     try {
-      const res = await axios.delete(
-        `${process.env.API_KEY}/api/v1/delete/model/${_id}`
-      );
-
+      const res = await axios.delete(`${process.env.API_KEY}/api/v1/delete/model/${_id}`);
       if (res.data.status === 1) {
         toast.success(`Model has been deleted.`);
       }
@@ -150,8 +147,8 @@ const page = () => {
   };
 
   const handleUpdate = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       const formData = new FormData();
       formData.append("id", singleData._id);
 
@@ -164,13 +161,9 @@ const page = () => {
       if (singleData.mobile !== "") {
         formData.append("brand", singleData.brand);
       }
-      const response = await axios.put(
-        `${process.env.API_KEY}/api/v1/update/model/${singleData._id}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const response = await axios.put(`${process.env.API_KEY}/api/v1/update/model/${singleData._id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (response.data.status === 1) {
         toast.success("Model updated successfully.");
@@ -188,8 +181,11 @@ const page = () => {
     fetchBrandDetails();
     fetchVehicleData();
   }, []);
+
   useEffect(() => {
-    fetchSingleModel();
+    if (id) {
+      fetchSingleModel(id);
+    }
   }, [id]);
 
   return (
