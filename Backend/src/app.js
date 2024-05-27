@@ -27,11 +27,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // hardcoded 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://autocion-s436.vercel.app/"],
+    origin: ["http://localhost:3000", "https://autocion-frontend-oflpf009d-moachubatomatos-projects.vercel.app/"],
     methods: [ "POST",  "GET" ],
     credentials: true,
   })
 );
+
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://autocion-frontend-oflpf009d-moachubatomatos-projects.vercel.app/");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+  if (req.method == "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
+
+app.options("/api/v1/*", (req, res) => {
+  res.sendStatus(200);
+});
+
+// Default route
+app.use("/", (req, res) => {
+  res.status(200).send("OK");
+});
+
+  next();
+});
 
 
 app.use("/api/v1", userRoutes);
