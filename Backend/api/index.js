@@ -51,7 +51,7 @@ app.options("/api/v1/*", (req, res) => {
 // Default route
 app.use("/", (req, res) => {
   console.log("successful!!");
-  res.status(200).send("OK");
+  res.json({message:"Hello the backend is working as intented!"})
 });
 
   next();
