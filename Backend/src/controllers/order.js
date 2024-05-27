@@ -6,7 +6,8 @@ import { sendmail } from "../sendMail.js";
 import { sendConfirmationEmail } from "../middlewares/sendMail.js";
 
 var razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_ID,
+  // key_id: process.env.RAZORPAY_ID,
+    key_id: "rzp_test_cE8CR8N2aTJffZ",
   key_secret: process.env.RAZORPAY_SECRET,
 });
 
