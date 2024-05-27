@@ -50,6 +50,7 @@ app.options("/api/v1/*", (req, res) => {
 
 // Default route
 app.use("/", (req, res) => {
+  console.log("successful!!");
   res.status(200).send("OK");
 });
 
