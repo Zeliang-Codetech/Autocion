@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 
 export const connectDB = () => {
   mongoose
-    // .connect(process.env.MONGO_URI, {
-    //   dbName: "Autocion",
-    // })
-      .connect("mongodb+srv://zeliangcodetech:codetech123@cluster0.szo31wo.mongodb.net/Autocion", {
+    .connect(process.env.MONGO_URI, {
       dbName: "Autocion",
     })
+  
     .then((connect) =>
       console.log(`DB Connected to ${connect.connection.host}`)
     )
