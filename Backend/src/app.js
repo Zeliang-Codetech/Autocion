@@ -21,7 +21,18 @@ const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// not working for some reason 
 app.use(cors());
+
+// hardcoded 
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://autocion-s436-33dpq8xap-moachubatomatos-projects.vercel.app"],
+    methods: [ "POST",  "GET" ],
+    credentials: true,
+  })
+);
+
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", brandRoutes);
