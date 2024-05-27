@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://autocion-s436.vercel.app"],
-    methods: [ "POST",  "GET" ],
+    methods: [ "POST", "GET", "PUT", "PATCH", "DELETE", "OPTIONS" ],
     credentials: true,
   })
 );
