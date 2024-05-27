@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, {useEffect,  useState } from "react";
 import "./style.scss";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -12,9 +12,18 @@ const page = () => {
   });
   const [error, setError] = useState(null);
   const router = useRouter();
-  const userString = localStorage.getItem("user");
-  const userObject = JSON.parse(userString);
-  const userId = userObject.user._id;
+ // Retrieve user data from localStorage if available
+  let userObject = "";
+  userObject = typeof window !== "undefined" ? localStorage.getItem("user") : "";
+useEffect(()=>{
+      if (userObject != undefined) {
+      userObject = JSON.parse(userString);
+    } 
+}, []);
+
+  // Extract userId from userObject if available
+  const userId = userObject ? userObject.user._id : null;
+
   const handleChange = async (e) => {
     setPassword({ ...password, [e.target.name]: e.target.value });
   };
