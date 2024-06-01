@@ -1,0 +1,115 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Josefin sans", sans-serif;
+
+}
+html {
+  --top-spacing: 100px;
+  scroll-padding-top: var(--top-spacing);
+}
+body{
+
+  background-color: var(--tertiary_color);
+}
+:root {
+  --primary_color: #01b7de;
+  --primary_color_light: rgba(1, 183, 222, 0.26);
+  --secondary_color: #292828;
+  --tertiary_color: #f9f4f4;
+}
+
+button {
+  background-color: var(--primary_color);
+  border:0.5px solid var(--primary_color);
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover{
+  background-color: white;
+  color: var(--primary_color);
+  }
+input,
+textarea,
+select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid rgb(230, 230, 230);
+}
+
+textarea {
+  resize: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.delete_btn {
+  cursor: pointer;
+  background-color: red;
+  border: 0.5px solid red;
+}
+.delete_btn:hover {
+  color: red;
+  background-color: white;
+
+}
+
+.hidden{
+  display: none;
+}
+
+.toast{
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+}
+.freeze, .freeze:hover{
+  color: black;
+  background-color: rgb(224, 224, 224);
+  border:0.5px solid rgb(224, 224, 224);
+  padding: 0.5rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.green_bg {
+  color: #47c363 !important;
+  background-color: #47c36326;
+}
+
+.red_bg {
+  color: #eb4141 !important;
+  background-color: #eb414126;
+}
+.error{
+  padding: 10px 0;
+  color: red;
+}
+.visibility_hidden{
+  visibility: hidden;
+}
+.dp_container {
+  cursor: pointer;
+  width: fit-content;
+
+  .dp {
+    width: auto;
+    height: auto;
+    border: 0.5px solid var(--primary_color);
+    border-radius: 100%;
+  }
+}
+.m-auto{
+margin: auto;
+}
+hr{
+  color: rgb(230, 230, 230);
+}
+.col-50{
+  width: 50%;
+}

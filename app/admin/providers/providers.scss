@@ -1,0 +1,168 @@
+.providers_container {
+  padding: 1rem 0;
+
+  .providers_heading {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filter {
+    display: flex;
+    gap: 10px;
+
+    .all,
+    .approved,
+    .rejected {
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+
+    .all {
+      color: #00b9ff !important;
+      background-color: #00b9ff29;
+    }
+
+    .approved {
+      color: #47c363 !important;
+      background-color: #47c36326;
+    }
+
+    .rejected {
+      color: #eb4141 !important;
+      background-color: #eb414126;
+    }
+  }
+}
+
+.providers_nav {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 5px;
+  text-align: center;
+
+  .active,
+  .provider_link:hover {
+    background-color: var(--primary_color);
+    color: white;
+    border-radius: 5px;
+  }
+
+  .provider_link {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+table,
+th,
+td {
+  border: 1px solid rgb(230, 230, 230);
+  border-collapse: collapse;
+  padding: 0.5rem;
+}
+
+.table {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgb(230, 230, 230);
+
+  .table_body,
+  .table_head {
+    text-align: center;
+    cursor: pointer;
+
+    .table_div {
+      display: flex;
+      align-items: center;
+      width: 70%;
+      gap: 2rem;
+      margin: auto;
+    }
+    .status {
+      width: 50%;
+      margin: auto;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+  }
+  .table_body:hover {
+    background-color: rgba(230, 230, 230, 20%);
+  }
+
+  .table_head {
+    background-color: rgb(241, 238, 238);
+  }
+}
+
+.modal_container {
+  padding: 1rem;
+  h1 {
+    padding: 1rem 0;
+  }
+  .modal_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .form_btn {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+  }
+}
+.detail_modal {
+  h3,
+  .status,
+  p,
+  h1 {
+    padding: 0.5rem 1rem;
+  }
+  .status {
+    width: fit-content;
+
+    p {
+      width: max-content;
+      border-radius: 5px;
+    }
+  }
+
+  hr {
+    margin: 10px auto;
+  }
+}
+.action_btn {
+  display: flex;
+  gap: 1rem;
+  width: min-content;
+  padding: 10px;
+}
+.approved {
+  color: #47c363 !important;
+  background-color: #47c36326;
+}
+
+.pending {
+  color: #eb4141 !important;
+  background-color: #eb414126;
+}
+.details_logo {
+  width: fit-content;
+  margin: auto;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.logo_providers {
+  border-radius: 50%;
+  border: 1px solid rgb(230, 230, 230);
+}
+.change_btn {
+  text-align: center;
+}
+.action_btn {
+  margin: auto;
+}

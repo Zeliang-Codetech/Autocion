@@ -1,0 +1,218 @@
+.cartContainer {
+  h1,
+  h2 {
+    padding: 0 0 2rem 0;
+  }
+  padding: 2rem;
+  .cartRow {
+    display: flex;
+    gap: 20px;
+    .col-50 {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .cartContent {
+        background-color: white;
+        border: 1px solid rgb(230, 230, 230);
+        border-radius: 5px;
+        gap: 10px;
+        display: flex;
+        padding: 1rem;
+        align-items: center;
+        .cardInfo {
+          width: 100%;
+          padding: 0 2rem;
+
+          .cartItemHeader,
+          .description,
+          .details {
+            padding: 1rem;
+          }
+          .details {
+            p {
+              padding: 6px 0;
+            }
+          }
+          .cartItemHeader {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+}
+
+.checkout {
+  background-color: white;
+
+  border-radius: 5px;
+  height: max-content;
+  padding: 2rem;
+  border: 1px solid rgb(230, 230, 230);
+  h1,
+  h2 {
+    padding: 1rem 0;
+  }
+  .sawf,
+  .subtotal {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .cartContainer {
+    h1,
+    h2 {
+      padding: 0 0 2rem 0;
+    }
+    padding: 2rem;
+    .cartRow {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .checkout {
+        padding: 1rem;
+
+        p {
+          font-size: 1rem;
+        }
+        h1 {
+          font-size: 2rem;
+          padding: 0.5rem 0;
+        }
+        .sawf,
+        .subtotal {
+          height: fit-content;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+      .col-50 {
+        box-sizing: border-box;
+        gap: 10px;
+        width: 100%;
+        .cartContent {
+          box-sizing: border-box;
+          width: 100%;
+          border-radius: 10px;
+          padding: 0 2rem;
+          .delete_btn {
+            width: 30%;
+            padding: 10px 14px;
+            font-size: 1rem;
+          }
+          .imageContainer {
+            width: 50%;
+
+            display: flex;
+            justify-content: center;
+          }
+          .cardInfo {
+            width: 100%;
+            padding: 1rem 2rem;
+
+            .cartItemHeader,
+            .description,
+            .details {
+              padding: 5px 0;
+              h3 {
+                font-size: 1.5rem;
+              }
+            }
+
+            p {
+              font-size: 0.6rem;
+            }
+            .cartItemHeader {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .cartContainer {
+    h1,
+    h2 {
+      padding: 0 0 2rem 0;
+    }
+    padding: 2rem;
+    h2 {
+      font-size: 1rem;
+    }
+    .cartRow {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .checkout {
+        padding: 1rem;
+
+        p {
+          font-size: 10px;
+        }
+        h1 {
+          font-size: 20px;
+          padding: 0.5rem 0;
+        }
+        .sawf,
+        .subtotal {
+          height: fit-content;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+      .col-50 {
+        box-sizing: border-box;
+        gap: 10px;
+        width: 100%;
+        .cartContent {
+          box-sizing: border-box;
+
+          width: 100%;
+          border-radius: 10px;
+          padding: 0 1rem;
+          .delete_btn {
+            width: 50%;
+            padding: 5px 7px;
+            font-size: 10px;
+          }
+          .imageContainer {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+          }
+          .cardInfo {
+            width: 100%;
+            padding: 1rem 2rem;
+
+            .cartItemHeader,
+            .description,
+            .details {
+              padding: 5px 0;
+              h3 {
+                font-size: 11px;
+              }
+            }
+
+            p {
+              font-size: 10px;
+            }
+            .cartItemHeader {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+            }
+          }
+        }
+      }
+    }
+  }
+}

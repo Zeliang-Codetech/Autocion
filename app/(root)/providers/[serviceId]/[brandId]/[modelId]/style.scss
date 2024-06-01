@@ -1,0 +1,364 @@
+.container {
+  display: flex;
+  .service_container {
+    padding: 3rem;
+    width: 50vw;
+
+    .nav {
+      background-color: white;
+      display: flex;
+      border: 1px solid rgb(230, 230, 230);
+      align-items: center;
+      border-radius: 5px;
+      padding: 1rem;
+      text-align: center;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+
+      .arrow {
+        pointer-events: auto;
+        cursor: pointer;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        padding: 5px;
+        background: rgb(221, 221, 221);
+        border-radius: 100%;
+      }
+
+      .provider_links::-webkit-scrollbar {
+        display: none;
+      }
+      .provider_links {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        overflow-x: auto;
+
+        .active,
+        .provider_link:hover {
+          background-color: var(--primary_color_light);
+          color: black;
+          border-radius: 5px;
+        }
+        .provider_link {
+          cursor: pointer;
+          color: black;
+          display: flex;
+          min-width: 27%;
+          flex-direction: column;
+          text-decoration: none;
+          padding: 1rem 2rem;
+          justify-content: space-between;
+          border-radius: 4px;
+          user-select: none;
+          white-space: nowrap;
+        }
+      }
+    }
+    h1 {
+      padding: 1rem 0;
+    }
+    .service_card {
+      background-color: white;
+      display: flex;
+      border: 1px solid rgb(230, 230, 230);
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      .imageContainer {
+        padding: 1rem;
+      }
+      .card_content {
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+
+        .prices {
+          display: flex;
+          gap: 10px;
+        }
+        .book {
+          margin-left: auto;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          margin-top: 10px;
+          .addToCart {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+          }
+        }
+        .service_headers {
+          display: flex;
+          justify-content: space-between;
+          h2 {
+            padding: 1rem 0;
+          }
+        }
+      }
+    }
+  }
+  .brand_model_container {
+    width: 100%;
+    height: 100vh;
+    padding: 3rem;
+    .container_flux {
+      h2 {
+        padding: 2rem 0;
+      }
+      overflow-y: scroll;
+      padding: 2rem;
+      border-radius: 3rem;
+      box-shadow: 0px 4px 41px 0px rgba(0, 0, 0, 0.25);
+      .card_container {
+        box-sizing: border-box;
+        height: 550px;
+        text-align: center;
+        display: grid;
+        grid-auto-rows: auto;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+
+        .card_content {
+          width: 90%;
+          height: fit-content;
+        }
+      }
+    }
+  }
+}
+p {
+  padding: 1rem 0;
+}
+.single_vehicle {
+  height: 500px;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 3rem;
+  overflow-y: scroll;
+  box-shadow: 0px 4px 41px 0px rgba(0, 0, 0, 0.25);
+  .single_card_content {
+    padding: 1rem;
+    border-radius: 2rem;
+    border: 1px solid rgb(230, 230, 230);
+    .image_vehicle {
+      border-radius: 100%;
+      padding: 1rem;
+      width: 200px !important;
+      height: 200px !important;
+      border: 1px solid rgb(230, 230, 230);
+    }
+  }
+  .vehicle_name {
+    padding: 2rem;
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .container {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    .service_container {
+      padding: 0;
+      width: 100%;
+      .nav {
+        padding: 0.1rem;
+
+        .provider_links {
+          .provider_link {
+            min-width: 20%;
+            font-size: 11px;
+          }
+        }
+      }
+
+      .service_card {
+        .card_content {
+          .service_headers {
+            h2 {
+              padding: 0;
+            }
+          }
+          .description {
+            p {
+              padding: 10px 0;
+              font-size: 10px;
+            }
+          }
+          .prices {
+            gap: 3px;
+            h2 {
+              font-size: 11px;
+              padding: 5px 0;
+            }
+          }
+          .book {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .addToCart {
+              text-align: center;
+            }
+          }
+          .service_headers {
+            h2 {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    .brand_model_container {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0;
+      .container_flux {
+        box-sizing: border-box;
+        h2 {
+          padding: 2rem 0;
+        }
+        overflow-y: scroll;
+        padding: 1rem;
+        border-radius: 3rem;
+        box-shadow: 0px 4px 41px 0px rgba(0, 0, 0, 0.25);
+        .card_container {
+          text-align: center;
+          height: 100%;
+          gap: 10px;
+
+          .card_content {
+            width: 80%;
+          }
+        }
+      }
+    }
+  }
+  p {
+    padding: 1rem 0;
+  }
+  .single_vehicle {
+    border-radius: 5px;
+    height: max-content;
+    .single_card_content {
+      .image_vehicle {
+        width: 100px !important;
+        height: 100px !important;
+      }
+    }
+    .vehicle_name {
+      gap: 10px;
+      padding: 1rem;
+      h1 {
+        font-size: 19px;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .container {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    .service_container {
+      padding: 0;
+      width: 100%;
+      .nav {
+        padding: 0.1rem;
+
+        .provider_links {
+          .provider_link {
+            min-width: 50%;
+            font-size: 11px;
+          }
+        }
+      }
+
+      .service_card {
+        .card_content {
+          .service_headers {
+            h2 {
+              padding: 0;
+            }
+          }
+          .description {
+            p {
+              padding: 10px 0;
+              font-size: 10px;
+            }
+          }
+          .prices {
+            gap: 3px;
+            h2 {
+              font-size: 11px;
+              padding: 5px 0;
+            }
+          }
+          .book {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .addToCart {
+              text-align: center;
+            }
+          }
+          .service_headers {
+            h2 {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
+    .brand_model_container {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0;
+      .container_flux {
+        box-sizing: border-box;
+        h2 {
+          padding: 2rem 0;
+        }
+        overflow-y: scroll;
+        padding: 1rem;
+        border-radius: 3rem;
+        box-shadow: 0px 4px 41px 0px rgba(0, 0, 0, 0.25);
+        .card_container {
+          text-align: center;
+          height: 100%;
+          gap: 10px;
+
+          .card_content {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  p {
+    padding: 1rem 0;
+  }
+  .single_vehicle {
+    border-radius: 5px;
+    height: max-content;
+    .single_card_content {
+      .image_vehicle {
+        width: 50px !important;
+        height: 50px !important;
+      }
+    }
+    .vehicle_name {
+      gap: 10px;
+      padding: 1rem;
+      h1 {
+        font-size: 11px;
+      }
+    }
+  }
+}

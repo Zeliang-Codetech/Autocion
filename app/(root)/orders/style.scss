@@ -1,0 +1,107 @@
+.orderContainer {
+  width: 100%;
+
+  height: 100%;
+  .orderHeader {
+    text-align: center;
+    padding: 2rem;
+  }
+  .orderContent {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 50rem;
+
+    .orderCard {
+      border-radius: 5px;
+      border: 1px solid rgb(230, 230, 230);
+      .orderCardHeader {
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        background-color: rgb(230, 230, 230);
+        p {
+          line-height: 2;
+        }
+      }
+      .orderCardBody {
+        background-color: white;
+        padding: 1rem 2rem;
+        .orderDetails {
+          display: flex;
+          gap: 10px;
+          p,
+          span {
+            line-height: 2;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .orderContainer {
+    .orderContent {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 1rem;
+
+      .orderCard {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0;
+        .orderCardHeader {
+          display: flex;
+          gap: 10px;
+          padding: 5px;
+          box-sizing: border-box;
+          width: 100%;
+          p {
+            font-size: 1rem;
+          }
+        }
+        .orderCardBody {
+          padding: 5px;
+          p,
+          span {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .orderContainer {
+    .orderContent {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 1rem;
+
+      .orderCard {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0;
+        .orderCardHeader {
+          display: flex;
+          gap: 10px;
+          padding: 5px;
+          box-sizing: border-box;
+          width: 100%;
+          p {
+            font-size: 10px;
+          }
+        }
+        .orderCardBody {
+          padding: 5px;
+          p,
+          span {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+}
